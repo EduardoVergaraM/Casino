@@ -7,26 +7,26 @@
 
 </head>
 
-<header>
+<body>
+    <header>
+        <div class="left">
+            <a href="index.html" class="logo-container">
+                <img src="img/logo.png" alt="Casino-Logo" class="logo">
+                <h1 class="casino-title">Casino</h1>
+            </a>
+            <nav>
+                <a href="desarrolladores.html">Desarrolladores</a>
+                <a href="historia.html">Historia y Reglas</a>
+            </nav>
+        </div>
+        <div class="right">
+            <a href="registro.html" class="button current-btn">Registrarse</a>
+            <a href="login.html" class="button">Iniciar Sesión</a>
+        </div>
+    </header>
 
-    <h1>Casino online</h1>
-    <nav>
-        <ul class="nav-list">
-            <li> <a href="index.html">Inicio</a> </li>
-            <li> <a href="registro.html"> Registro </a> </li>
-            <li> <a href="login.html"> Inicia sesion </a> </li>
-            <li> <a href="desarrolladores.html"> Desarrolladores </a> </li>
-            <li> <a href="historia.html"> Historia y reglas </a> </li>
-            <li> <a href="depositos.html"> Deposita aqui </a> </li>
-
-        </ul>
-
-    </nav>
-
-</header>
-
-<main>
-    <form action="miCuenta.html" method="get">
+    <main>
+    <form action="login.html" method="get">
 
         <fieldset>
             <legend>Ingrese sus datos personales</legend>
@@ -54,17 +54,11 @@
             <label for="confirmacion">Confirmar contrasena</label>
             <input id="confirmacion" type="password" required title="Repite tu contrasena">
 
-            <button type="submit" > Registrarse</button>
+            <button type="submit" class="form"> Registrarse</button>
         </fieldset>
-
-
-
-
     </form>
-
-
-
-</main>
+    </main>
+</body>
 
 
 </html>

@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #202027;
+  font-family: 'Arial', sans-serif;
 }
 
 /* Header */
@@ -14,7 +15,8 @@ header{
   padding: 5px 30px;
   margin: 0px;
 }
-/* Left-Header */
+
+/* Header Left */
 .left {
   display: flex;
   align-items: center;
@@ -36,17 +38,18 @@ header{
   font-size: 26px;
   font-weight: bold;
   font-family: "Lucida Handwriting";
-  color: #ffd700;
+  color: gold;
 }
+
+/* Header Navegation */ 
 nav{
   display: flex;
-  gap: 50px;             
+  gap: 30px;             
 }
 nav a{
   color: white;
   text-decoration: none;
   font-weight: bold;
-  font-family: 'Arial', sans-serif;
   text-transform: uppercase;
   font-size: 14px;
   padding: 10px 10px;
@@ -59,31 +62,28 @@ nav a:hover:not(.current){
   color: gold;
   transform: scale(1.1);
 }
-/* Right-Header */
+
+/* Header Right */
 .right {
   display: flex;
   gap: 20px;
 }
-.buttons{
+.button{
   padding: 10px 20px;
   text-decoration: none;
-  font-family: 'Arial', sans-serif;
   text-transform: uppercase;
   font-weight: bold;
   font-size: 14px;
   border-radius: 15px;
-}
-.register-button {
   border: 2px solid gold;
   background-color: #2f2f38;
   color: white;
 }
-.login-button {
-  border: 2px solid gold;
-  background-color: #2f2f38;
-  color: white;
+.current-btn {
+  background-color: gold;
+  color: #2f2f38
 }
-.buttons:hover {
+.button:hover {
   background-color: gold;
   color: #2f2f38;
 }
@@ -93,7 +93,139 @@ main{
   color: white
 }
 
-div .ganadores .color-red{
+/* Inicio */
+.hero {
+    padding: 20px 20px;
+    text-align: center;
+    color: white;
+}
+.hero h1 {
+  font-family: "Lucida Handwriting";
+  font-size: 40px;
+  margin-bottom: 20px;
+  color: gold;
+  text-transform: uppercase;
+}
+.hero h2 {
+  font-size: 20px;
+  color: #ccc;
+}
+.hero-content {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.text-content {
+  max-width: 600px;
+  text-align: center;
+}
+.paragraph-content {
+  background-color: #2f2f38;
+  padding: 5px 25px;
+  border-radius: 10px;
+  margin: 20px;
+}
+.text-content p {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: justify;
+}
+.register2-button {
+  display: inline-block;
+  padding: 15px 25px;
+  background-color: #ffd700;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+.register2-button:hover {
+  transform: scale(1.1);
+}
+.hero-img {
+  max-width: 800px;
+  border-radius: 30px;
+}
+
+/* Desarrolladores y Reglas*/
+.info-section {
+    margin-bottom: 40px;
+    text-align: center;
+}
+.info-section h2 {
+    font-family: "Lucida Handwriting", cursive;
+    font-size: 28px;
+    color: gold;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+.info-content {
+    background-color: #2f2f38;
+    padding: 5px 25px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.info-content p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: white;
+    text-align: justify;
+}
+p.academic-note {
+    font-style: italic;
+    color: #ccc;
+    background-color: #3a3a44;
+    padding: 10px;
+    border-left: 4px solid #ffd700;
+    text-align: left;
+}
+.info-content ul {
+    list-style-type: disc;
+    margin: 15px 0;
+    padding-left: 30px;
+    text-align: left;
+}
+.info-content ul li {
+    margin-bottom: 10px;
+}
+.info-content ul ul {
+    list-style-type: circle;
+    padding-left: 20px;
+}
+.apuesta-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background-color: #3a3a44;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.apuesta-tabla th, .apuesta-tabla td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #4a4a54;
+}
+.apuesta-tablath {
+    background-color: #ffd700;
+    color: #1a1a1a;
+    font-weight: bold;
+}
+.apuesta-tabla td {
+    color: #ccc;
+}
+.apuesta-tabla tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* Ruleta */
+.ganadores.color-red{
   color: red;
 }
 .color-black{
@@ -104,36 +236,32 @@ div .ganadores .color-red{
 }
 
 
+/* Form Style */
 form {
   max-width: 600px;
   margin: 30px auto;
   padding: 30px;
   border-radius: 30px;
-  background: #111;
+  background: #2f2f38;
   color: #fff;
 }
-
 fieldset {
   border: 2px solid gold;   
   border-radius: 8px;
   margin-bottom: 20px;       
   padding: 15px;
 }
-
-
 legend {
   font-size: 20px;
   font-weight: bold;
   color: gold;              
   padding: 0 8px;
 }
-
 label {
   display: block;           
   margin-top: 12px;
   font-weight: bold;
 }
-
 input[type="text"],
 input[type="email"],
 input[type="date"],
@@ -143,19 +271,17 @@ input[type="password"] {
   padding: 10px;
   margin-top: 5px;
   border-radius: 6px;
-  border: 1px solid #555;
-  background: #222;          
+  border: 1px solid gold;
+  background: #2f2f38;          
   color: white;
   font-size: 16px;
 }
-
 input:focus {
   border-color: gold;
   outline: none;
   box-shadow: 0 0 6px gold; 
 }
-
-button {
+button.form{
   display: block;
   width: 100%;
   padding: 12px;
@@ -165,6 +291,6 @@ button {
   border-radius: 8px;
   font-weight: bold;
   font-size: 16px;
-  color: #000;
+  color: #2f2f38;
   cursor: pointer;
 }

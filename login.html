@@ -7,28 +7,28 @@
 
 </head>
 
+<body>
 <header>
-
-    <h1>Casino online</h1>
-    <nav>
-        <ul class="nav-list">
-            <li> <a href="index.html">Inicio</a> </li>
-            <li> <a href="registro.html"> Registro </a> </li>
-            <li> <a href="login.html"> Inicia sesion </a> </li>
-            <li> <a href="desarrolladores.html"> Desarrolladores </a> </li>
-            <li> <a href="historia.html"> Historia y reglas </a> </li>
-            <li> <a href="depositos.html"> Deposita aqui </a> </li>
-
-        </ul>
-
-    </nav>
-
-</header>
+        <div class="left">
+            <a href="index.html" class="logo-container">
+                <img src="img/logo.png" alt="Casino-Logo" class="logo">
+                <h1 class="casino-title">Casino</h1>
+            </a>
+            <nav>
+                <a href="desarrolladores.html">Desarrolladores</a>
+                <a href="historia.html">Historia y Reglas</a>
+            </nav>
+        </div>
+        <div class="right">
+            <a href="registro.html" class="button">Registrarse</a>
+            <a href="login.html" class="button current-btn">Iniciar Sesión</a>
+        </div>
+    </header>
 
 <main>
     <h2>Acceso a tu cuenta</h2>
 
-    <form action="miCuenta.html" method="get">
+    <form action="perfil.html" method="get">
         <fieldset>
             <legend>Ingresa a tus datos</legend>
 
@@ -38,17 +38,12 @@
             <label for="contrasena">Ingresa tu contrasena </label>
             <input id="contrasena" type="password" required title="Ingresa tu contrasena">
 
-            <button type="submit" value="Ingresar"> Ingresar</button>
+            <button type="submit" value="Ingresar" class="form">Ingresar</button>
             <p> No tienes cuenta? Registrate <a href="registro.html">aqui </a> </p>
 
         </fieldset>
-
-
     </form>
 
-
-
-
 </main>
-
+</body>
 </html>
