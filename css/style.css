@@ -93,8 +93,7 @@ main{
   color: white
 }
 
-div .ganadores{}
-.color-red{
+div .ganadores .color-red{
   color: red;
 }
 .color-black{
@@ -102,4 +101,70 @@ div .ganadores{}
 }
 .color-green{
   color: green;
+}
+
+
+form {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 30px;
+  background: #111;
+  color: #fff;
+}
+
+fieldset {
+  border: 2px solid gold;   
+  border-radius: 8px;
+  margin-bottom: 20px;       
+  padding: 15px;
+}
+
+
+legend {
+  font-size: 20px;
+  font-weight: bold;
+  color: gold;              
+  padding: 0 8px;
+}
+
+label {
+  display: block;           
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="password"] {
+  display: block;
+  width: 550px;              
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #222;          
+  color: white;
+  font-size: 16px;
+}
+
+input:focus {
+  border-color: gold;
+  outline: none;
+  box-shadow: 0 0 6px gold; 
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background: gold;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
 }
