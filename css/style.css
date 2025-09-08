@@ -336,11 +336,14 @@ button.form{
   border-radius: 12px;
   padding: 15px;
 }
+.info-saldo h2{
+    font-family: "Lucida Handwriting", cursive;
+    color:gold;
+}
 
 /* Estado del juego */
 .estado-box {
   text-align: center;
-  font-family: "Lucida Handwriting", cursive;
   width: 500px;
   height: 100px;
   padding: 10px;
@@ -353,6 +356,10 @@ button.form{
   align-items: center;         
 }
 
+.estado-box h2{
+  font-family: "Lucida Handwriting", cursive;
+  color: gold;
+}
 .estado-box p {
   display: flex;
   align-items: center;        
@@ -522,7 +529,6 @@ button.form{
 /* Transferencias */
 
 .saldo-transf{
-  font-family:"Lucida Handwriting", cursive ;
   background-color: #2f2f38;
   border: 2px solid gold;
   border-radius: 12px;
@@ -533,4 +539,8 @@ button.form{
   justify-content: center;
   max-width: 600px;
   margin: 30px auto;
+}
+.saldo-transf h2{
+  font-family:"Lucida Handwriting", cursive ;
+  color:gold;
 }
