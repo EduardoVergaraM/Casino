@@ -486,6 +486,8 @@ button.form{
 
 
 .giros h2{
+  font-family:"Lucida Handwriting", cursive ;
+  color: gold;
   padding-left: 10px;
   background-color: #2f2f38;
   border: 2px solid gold;
