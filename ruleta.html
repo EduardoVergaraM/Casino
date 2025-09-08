@@ -6,85 +6,105 @@
     <title>Mesa de ruleta</title>
 </head>
 
-    <header>
-        <div class="left">
-            <a href="index.html" class="logo-container">
-                <img src="img/logo.png" alt="Casino-Logo" class="logo">
-                <h1 class="casino-title">Casino</h1>
-            </a>
-            <nav>
-                <a href="perfil.html">Perfil</a>
-                <a href="transacciones.html">Transacciones</a>
-                <a href="ruleta.html" class="current">Ruleta</a>
-            </nav>
-        </div>
-    </header>
+<body>
+<header>
+    <div class="left">
+        <a href="index.html" class="logo-container">
+            <img src="img/logo.png" alt="Casino-Logo" class="logo">
+            <h1 class="casino-title">Casino</h1>
+        </a>
+        <nav>
+            <a href="perfil.html">Perfil</a>
+            <a href="transacciones.html">Transacciones</a>
+            <a href="ruleta.html" class="current">Ruleta</a>
+        </nav>
+    </div>
+</header>
 
 <main>
+    <div class="general-rul">
+    <div class="ruleta">
+        <img id="ruleta"
+            src="https://www.shutterstock.com/image-vector/european-roulette-online-casino-wheel-260nw-1858385485.jpg"
+            alt="Ruleta europea">
+    </div>
 
-    <img src="https://www.shutterstock.com/image-vector/european-roulette-online-casino-wheel-260nw-1858385485.jpg"
-        alt="Ruleta europea">
+    <div class="info-saldo">
+        <h2>Saldo disponible</h2>
+        <p><strong>$1.000.000</strong></p>
+    </div>
+    </div>
 
-    <h2>Saldo disponible</h2>
-    <p> <strong>$1.000.000</strong></p>
+    <div class="estado-box">
+        <h2>Estado del juego</h2>
+        <p>
+            <span class="estado-indicador activo"></span>
+            Activo
+        </p>
+    </div>
 
-    <h2>Estado del juego</h2>
-    <p>Recibiendo apuestas</p>
+    <div class="tablon-ganadores">
+        <div class="ganadores-box">
+            <h2>Últimos 5 ganadores</h2>
+            <ul>
+                <li class="color-red">32 - Rojo</li>
+                <li class="color-black">15 - Negro</li>
+                <li class="color-red">7 - Rojo</li>
+                <li class="color-green">0 - Verde</li>
+                <li class="color-black">22 - Negro</li>
+            </ul>
+        </div>
 
-    <h2>Ultimos 5 ganadores</h2>
-    <ul>
-        <li style="color:red;">32 - Rojo</li>
-        <li style="color:black;">15 - Negro</li>
-        <li style="color:red;">7 - Rojo</li>
-        <li style="color:green;">0 - Verde</li>
-        <li style="color:black;">22 - Negro</li>
-    </ul>
+        <div class="apuestas-box">
+            <h2>Últimas 5 Apuestas</h2>
+            <table class="tabla-de-apuestas">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Monto</th>
+                        <th>Resultado</th>
+                        <th>Variación de Saldo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Apuesta al Rojo</td>
+                        <td>$50.000</td>
+                        <td>Ganó</td>
+                        <td>+$50.000</td>
+                    </tr>
+                    <tr>
+                        <td>Número 7</td>
+                        <td>$20.000</td>
+                        <td>Perdió</td>
+                        <td>-$20.000</td>
+                    </tr>
+                    <tr>
+                        <td>Par/Impar</td>
+                        <td>$30.000</td>
+                        <td>Ganó</td>
+                        <td>+$30.000</td>
+                    </tr>
+                    <tr>
+                        <td>Número 0</td>
+                        <td>$10.000</td>
+                        <td>Perdió</td>
+                        <td>-$10.000</td>
+                    </tr>
+                    <tr>
+                        <td>Negro</td>
+                        <td>$40.000</td>
+                        <td>Ganó</td>
+                        <td>+$40.000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <h2>Últimas 5 Apuestas</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Tipo</th>
-                <th>Monto</th>
-                <th>Resultado</th>
-                <th>Variación de Saldo</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Apuesta al Rojo</td>
-                <td>$50.000</td>
-                <td>Ganó</td>
-                <td>+$50.000</td>
-            </tr>
-            <tr>
-                <td>Número 7</td>
-                <td>$20.000</td>
-                <td>Perdió</td>
-                <td>-$20.000</td>
-            </tr>
-            <tr>
-                <td>Par/Impar</td>
-                <td>$30.000</td>
-                <td>Ganó</td>
-                <td>+$30.000</td>
-            </tr>
-            <tr>
-                <td>Número 0</td>
-                <td>$10.000</td>
-                <td>Perdió</td>
-                <td>-$10.000</td>
-            </tr>
-            <tr>
-                <td>Negro</td>
-                <td>$40.000</td>
-                <td>Ganó</td>
-                <td>+$40.000</td>
-            </tr>
-        </tbody>
-    </table>
+
 </main>
-
+</body>
 
 
 </html>

@@ -6,6 +6,7 @@
     <title>Deposita y gana</title>
 </head>
 
+<body>
     <header>
         <div class="left">
             <a href="index.html" class="logo-container">
@@ -21,7 +22,7 @@
     </header>
 
 <main>
-    <div>
+    <div class="saldo-transf">
         <h2>Saldo actual</h2>
         <p>$1.000.000</p>
     </div>
@@ -31,9 +32,9 @@
             <legend>Ingresa tus datos para depositar</legend>
 
             <label for="deposito">Monto a depositar</label>
-            <input id="deposito" type="number" requested placeholder="$1000000" title="Numero del monto a depositar">
+            <input id="deposito" type="number" requested placeholder="$1000000" title="Numero del monto a depositar" min = "5000">
 
-            <button type="submit" value="Deposita"> Deposita </button>
+            <button type="submit" class="form"> Deposita </button>
 
         </fieldset>
     </form>
@@ -43,9 +44,9 @@
             <legend>Ingresa tus datos para retirar</legend>
 
             <label for="retiro">Monto a retirar</label>
-            <input id="retiro" type="number" requested placeholder="$1000000" title="Numero del monto a retirar">
+            <input id="retiro" type="number" requested placeholder="$1000000" title="Numero del monto a retirar" min = "5000">
 
-            <button type="submit" value="Deposita"> Retira </button>
+            <button type="submit" class="form"> Retira </button>
 
         </fieldset>
     </form>
@@ -53,6 +54,6 @@
 
 
 </main>
-
+</body>
 
 </html>
