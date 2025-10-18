@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/ruleta.css">
     <title>Mesa de ruleta</title>
 </head>
-
 <body>
 <header>
     <div class="left">
@@ -20,21 +19,125 @@
         </nav>
     </div>
 </header>
-
 <main>
     <div class="general-rul">
-    <div class="ruleta">
-        <img id="ruleta"
-            src="images/roulette.png"
-            alt="Ruleta europea">
+        <div id="container">
+            <!-- Rueda de la ruleta (dinámica del JS) -->
+            <div class="wheel">
+                <div class="outerRim"></div>
+                <div id="sect1" class="sect"><span class="single">0</span><div class="block"></div></div>
+                <div id="sect2" class="sect"><span class="double">32</span><div class="block"></div></div>
+                <div id="sect3" class="sect"><span class="double">15</span><div class="block"></div></div>
+                <div id="sect4" class="sect"><span class="double">19</span><div class="block"></div></div>
+                <div id="sect5" class="sect"><span class="single">4</span><div class="block"></div></div>
+                <div id="sect6" class="sect"><span class="double">21</span><div class="block"></div></div>
+                <div id="sect7" class="sect"><span class="single">2</span><div class="block"></div></div>
+                <div id="sect8" class="sect"><span class="double">25</span><div class="block"></div></div>
+                <div id="sect9" class="sect"><span class="double">17</span><div class="block"></div></div>
+                <div id="sect10" class="sect"><span class="double">34</span><div class="block"></div></div>
+                <div id="sect11" class="sect"><span class="single">6</span><div class="block"></div></div>
+                <div id="sect12" class="sect"><span class="double">27</span><div class="block"></div></div>
+                <div id="sect13" class="sect"><span class="double">13</span><div class="block"></div></div>
+                <div id="sect14" class="sect"><span class="double">36</span><div class="block"></div></div>
+                <div id="sect15" class="sect"><span class="double">11</span><div class="block"></div></div>
+                <div id="sect16" class="sect"><span class="double">30</span><div class="block"></div></div>
+                <div id="sect17" class="sect"><span class="single">8</span><div class="block"></div></div>
+                <div id="sect18" class="sect"><span class="double">23</span><div class="block"></div></div>
+                <div id="sect19" class="sect"><span class="double">10</span><div class="block"></div></div>
+                <div id="sect20" class="sect"><span class="single">5</span><div class="block"></div></div>
+                <div id="sect21" class="sect"><span class="double">24</span><div class="block"></div></div>
+                <div id="sect22" class="sect"><span class="double">16</span><div class="block"></div></div>
+                <div id="sect23" class="sect"><span class="double">33</span><div class="block"></div></div>
+                <div id="sect24" class="sect"><span class="single">1</span><div class="block"></div></div>
+                <div id="sect25" class="sect"><span class="double">20</span><div class="block"></div></div>
+                <div id="sect26" class="sect"><span class="double">14</span><div class="block"></div></div>
+                <div id="sect27" class="sect"><span class="double">31</span><div class="block"></div></div>
+                <div id="sect28" class="sect"><span class="single">9</span><div class="block"></div></div>
+                <div id="sect29" class="sect"><span class="double">22</span><div class="block"></div></div>
+                <div id="sect30" class="sect"><span class="double">18</span><div class="block"></div></div>
+                <div id="sect31" class="sect"><span class="double">29</span><div class="block"></div></div>
+                <div id="sect32" class="sect"><span class="single">7</span><div class="block"></div></div>
+                <div id="sect33" class="sect"><span class="double">28</span><div class="block"></div></div>
+                <div id="sect34" class="sect"><span class="double">12</span><div class="block"></div></div>
+                <div id="sect35" class="sect"><span class="double">35</span><div class="block"></div></div>
+                <div id="sect36" class="sect"><span class="single">3</span><div class="block"></div></div>
+                <div id="sect37" class="sect"><span class="double">26</span><div class="block"></div></div>
+                <div class="pocketsRim"></div>
+                <div class="ballTrack"><div class="ball"></div></div>
+                <div class="pockets"></div>
+                <div class="cone"></div>
+                <div class="turret"></div>
+                <div class="turretHandle"><div class="thendOne"></div><div class="thendTwo"></div></div>
+            </div>
+            <!-- Tablero de apuestas -->
+            <div id="betting_board">
+                <div class="winning_lines">
+                    <div id="wlttb_top" class="wlttb">
+                        <div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div>
+                    </div>
+                    <div id="wlttb_1" class="wlttb">
+                        <div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div>
+                    </div>
+                    <div id="wlttb_2" class="wlttb">
+                        <div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div>
+                    </div>
+                    <div id="wlttb_3" class="wlttb">
+                        <div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div><div class="ttbbetblock"></div>
+                    </div>
+                    <div id="wlrtl_1" class="wlrtl"><div class="rtlbb1"></div><div class="rtlbb2"></div><div class="rtlbb3"></div></div>
+                    <div id="wlrtl_2" class="wlrtl"><div class="rtlbb1"></div><div class="rtlbb2"></div><div class="rtlbb3"></div></div>
+                    <div id="wlrtl_3" class="wlrtl"><div class="rtlbb1"></div><div class="rtlbb2"></div><div class="rtlbb3"></div></div>
+                    <div id="wlrtl_4" class="wlrtl"><div class="rtlbb1"></div><div class="rtlbb2"></div><div class="rtlbb3"></div></div>
+                    <div id="wlrtl_5" class="wlrtl"><div class="rtlbb1"></div><div class="rtlbb2"></div><div class="rtlbb3"></div></div>
+                    <div id="wlrtl_6" class="wlrtl"><div class="rtlbb1"></div><div class="rtlbb2"></div><div class="rtlbb3"></div></div>
+                    <div id="wlrtl_7" class="wlrtl"><div class="rtlbb1"></div><div class="rtlbb2"></div><div class="rtlbb3"></div></div>
+                    <div id="wlrtl_8" class="wlrtl"><div class="rtlbb1"></div><div class="rtlbb2"></div><div class="rtlbb3"></div></div>
+                    <div id="wlrtl_9" class="wlrtl"><div class="rtlbb1"></div><div class="rtlbb2"></div><div class="rtlbb3"></div></div>
+                    <div id="wlrtl_10" class="wlrtl"><div class="rtlbb1"></div><div class="rtlbb2"></div><div class="rtlbb3"></div></div>
+                    <div id="wlrtl_11" class="wlrtl"><div class="rtlbb1"></div><div class="rtlbb2"></div><div class="rtlbb3"></div></div>
+                    <div id="wlcb_1" class="wlcb">
+                        <div id="cbbb_1" class="cbbb"></div><div id="cbbb_2" class="cbbb"></div><div id="cbbb_3" class="cbbb"></div><div id="cbbb_4" class="cbbb"></div><div id="cbbb_5" class="cbbb"></div><div id="cbbb_6" class="cbbb"></div><div id="cbbb_7" class="cbbb"></div><div id="cbbb_8" class="cbbb"></div><div id="cbbb_9" class="cbbb"></div><div id="cbbb_10" class="cbbb"></div><div id="cbbb_11" class="cbbb"></div>
+                    </div>
+                    <div id="wlcb_2" class="wlcb">
+                        <div id="cbbb_12" class="cbbb"></div><div id="cbbb_13" class="cbbb"></div><div id="cbbb_14" class="cbbb"></div><div id="cbbb_15" class="cbbb"></div><div id="cbbb_16" class="cbbb"></div><div id="cbbb_17" class="cbbb"></div><div id="cbbb_18" class="cbbb"></div><div id="cbbb_19" class="cbbb"></div><div id="cbbb_20" class="cbbb"></div><div id="cbbb_21" class="cbbb"></div><div id="cbbb_22" class="cbbb"></div>
+                    </div>
+                </div>
+                <div class="bbtop">
+                    <div class="bbtoptwo">1 to 18</div><div class="bbtoptwo">19 to 36</div>
+                </div>
+                <div class="number_board">
+                    <div class="number_0"><div class="nbn">0</div></div>
+                    <div class="number_block redNum"><div class="nbn">3</div></div><div class="number_block blackNum"><div class="nbn">6</div></div><div class="number_block redNum"><div class="nbn">9</div></div><div class="number_block redNum"><div class="nbn">12</div></div><div class="number_block blackNum"><div class="nbn">15</div></div><div class="number_block redNum"><div class="nbn">18</div></div><div class="number_block redNum"><div class="nbn">21</div></div><div class="number_block blackNum"><div class="nbn">24</div></div><div class="number_block redNum"><div class="nbn">27</div></div><div class="number_block redNum"><div class="nbn">30</div></div><div class="number_block blackNum"><div class="nbn">33</div></div><div class="number_block redNum"><div class="nbn">36</div></div><div class="tt1_block"><div class="nbn">2 to 1</div></div>
+                    <div class="number_block blackNum"><div class="nbn">2</div></div><div class="number_block redNum"><div class="nbn">5</div></div><div class="number_block blackNum"><div class="nbn">8</div></div><div class="number_block blackNum"><div class="nbn">11</div></div><div class="number_block redNum"><div class="nbn">14</div></div><div class="number_block blackNum"><div class="nbn">17</div></div><div class="number_block blackNum"><div class="nbn">20</div></div><div class="number_block redNum"><div class="nbn">23</div></div><div class="number_block blackNum"><div class="nbn">26</div></div><div class="number_block blackNum"><div class="nbn">29</div></div><div class="number_block redNum"><div class="nbn">32</div></div><div class="number_block blackNum"><div class="nbn">35</div></div><div class="tt1_block"><div class="nbn">2 to 1</div></div>
+                    <div class="number_block redNum"><div class="nbn">1</div></div><div class="number_block blackNum"><div class="nbn">4</div></div><div class="number_block redNum"><div class="nbn">7</div></div><div class="number_block blackNum"><div class="nbn">10</div></div><div class="number_block blackNum"><div class="nbn">13</div></div><div class="number_block redNum"><div class="nbn">16</div></div><div class="number_block redNum"><div class="nbn">19</div></div><div class="number_block blackNum"><div class="nbn">22</div></div><div class="number_block redNum"><div class="nbn">25</div></div><div class="number_block blackNum"><div class="nbn">28</div></div><div class="number_block blackNum"><div class="nbn">31</div></div><div class="number_block redNum"><div class="nbn">34</div></div><div class="tt1_block"><div class="nbn">2 to 1</div></div>
+                </div>
+                <div class="bo3_board">
+                    <div class="bo3_block">1 to 12</div><div class="bo3_block">13 to 24</div><div class="bo3_block">25 to 36</div>
+                </div>
+                <div class="oto_board">
+                    <div class="oto_block">EVEN</div><div class="oto_block redNum">RED</div><div class="oto_block blackNum">BLACK</div><div class="oto_block">ODD</div>
+                </div>
+                <div class="chipDeck">
+                    <div class="cdChip red"><span class="cdChipSpan">1</span></div>
+                    <div class="cdChip blue cdChipActive"><span class="cdChipSpan">5</span></div>
+                    <div class="cdChip orange"><span class="cdChipSpan">10</span></div>
+                    <div class="cdChip gold"><span class="cdChipSpan">100</span></div>
+                    <div class="cdChip clearBet"><span class="cdChipSpan">clear</span></div>
+                </div>
+                <div class="bankContainer">
+                    <div class="bank"><span id="bankSpan">1,000</span></div>
+                    <div class="bet"><span id="betSpan">0</span></div>
+                </div>
+                <div class="pnBlock">
+                    <div id="pnContent"></div>
+                </div>
+            </div>
+        </div>
+        <div class="info-saldo">
+            <h2>Saldo disponible</h2>
+            <p><strong id="bankSpan">$1.000.000</strong></p> <!-- Dinámico con JS -->
+        </div>
     </div>
-
-    <div class="info-saldo">
-        <h2>Saldo disponible</h2>
-        <p><strong>$1.000.000</strong></p>
-    </div>
-    </div>
-
     <div class="estado-box">
         <h2>Estado del juego</h2>
         <p>
@@ -42,19 +145,13 @@
             Activo
         </p>
     </div>
-
     <div class="tablon-ganadores">
         <div class="ganadores-box">
             <h2>Últimos 5 ganadores</h2>
-            <ul>
-                <li class="color-red">32 - Rojo</li>
-                <li class="color-black">15 - Negro</li>
-                <li class="color-red">7 - Rojo</li>
-                <li class="color-green">0 - Verde</li>
-                <li class="color-black">22 - Negro</li>
-            </ul>
+            <div class="pnBlock"> <!-- Integrado del juego para historial dinámico -->
+                <div id="pnContent"></div>
+            </div>
         </div>
-
         <div class="apuestas-box">
             <h2>Últimas 5 Apuestas</h2>
             <table class="tabla-de-apuestas">
@@ -101,10 +198,7 @@
             </table>
         </div>
     </div>
-
-
 </main>
+<script src="js/ruleta.js"></script>
 </body>
-
-
 </html>

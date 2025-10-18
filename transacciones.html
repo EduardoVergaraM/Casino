@@ -21,39 +21,72 @@
         </div>
     </header>
 
-<main>
-    <div class="saldo-transf">
-        <h2>Saldo actual</h2>
-        <p>$1.000.000</p>
-    </div>
+    <main>
+        <div class="saldo-transf">
+            <h2>Saldo actual</h2>
+            <p id="saldo-actual">$1.000.000</p>
+        </div>
 
-    <form>
-        <fieldset>
-            <legend>Ingresa tus datos para depositar</legend>
+        <form id="form-deposito">
+            <fieldset>
+                <legend>Ingresa tus datos para depositar</legend>
 
-            <label for="deposito">Monto a depositar</label>
-            <input id="deposito" type="number" requested placeholder="$1000000" title="Numero del monto a depositar" min = "5000">
+                <label for="titular">Nombre del titular</label>
+                <input type="text" id="titular" required placeholder="Mish">
 
-            <button type="submit" class="form"> Deposita </button>
+                <label for="tarjeta">Numero de Tarjeta</label>
+                <input type="text" id="tarjeta" maxlength="16" required pattern="\d{16}"
+                    placeholder="XXXX XXXX XXXX XXXX" step="1">
 
-        </fieldset>
-    </form>
+                <label for="expiracion">Fecha de expiracion</label>
+                <input type="month" id="expiracion" required placeholder="MM/YY">
 
-    <form>
-        <fieldset>
-            <legend>Ingresa tus datos para retirar</legend>
+                <label for="ccv">Numero de seguridad/CCV</label>
+                <input type="text" id="ccv" maxlength="3" pattern="\d{3}" required step="1">
 
-            <label for="retiro">Monto a retirar</label>
-            <input id="retiro" type="number" requested placeholder="$1000000" title="Numero del monto a retirar" min = "5000">
+                <label for="deposito">Monto a depositar</label>
+                <input id="deposito" type="number" required placeholder="$1000000" title="Numero del monto a depositar"
+                    min="1" step="1">
 
-            <button type="submit" class="form"> Retira </button>
+                <button type="submit" class="form"> Deposita </button>
 
-        </fieldset>
-    </form>
+            </fieldset>
+        </form>
+
+        <form id="form-retiro">
+            <fieldset>
+                <legend>Ingresa tus datos para retirar</legend>
+
+                <label for="titular-r">Titular</label>
+                <input id="titular-r" type="text"  title="Nombre del titular"
+                    min="1" required>
+
+                <label for="n-cuenta">Numero de cuenta</label>
+                <input id="n-cuenta" type="number" title="Numero de cuenta"
+                    min="1" required>
+
+                
+                <label for="banco">Banco</label>
+                <select id="banco" name="banco">
+                    <option value="">Selecciona un banco</option>
+                    <option value="Banco mish">Banco mish</option>
+                    <option value="balatro">Balatro</option>
+                    <option value="silson">Silson</option>
+                </select>
 
 
+                <label for="retiro">Monto a retirar</label>
+                <input id="retiro" type="number" placeholder="$1000000" title="Numero del monto a retirar"
+                    min="1" step="1" required>
 
-</main>
+                <button type="submit" class="form"> Retira </button>
+
+            </fieldset>
+        </form>
+
+    </main>
+    <script src="js/transacciones.js"></script>
+    <script src="js/commons.js"> </script>
 </body>
 
 </html>
