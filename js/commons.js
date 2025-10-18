@@ -32,8 +32,12 @@ function actualizarPerfil() {
     const saldoPerfil = document.getElementById('saldo-usuario');
     const usuarioPerfil = document.getElementById('usuario-perfil');
 
+
+
     if (saldoPerfil) saldoPerfil.textContent = `$${cuenta.saldo.toLocaleString()}`;
     if (usuarioPerfil) usuarioPerfil.textContent = `${usuario.toLowerCase()}`;
+
+
 
     const tablaPerfil = document.getElementById('registro');
     const filas = tablaPerfil.querySelectorAll('tr');
@@ -57,6 +61,18 @@ function actualizarPerfil() {
 
 }
 
+function actualizarRuleta() {
+    const usuario = localStorage.getItem('usuarioActual');
+    const cuentas = JSON.parse(localStorage.getItem('cuentas'));
+    const cuenta = cuentas[usuario];
+    const saldoRuleta = document.getElementById('saldo-ruleta');
+    const saldoBanco = document.getElementById('bankSpan');
+
+    if (saldoBanco) saldoBanco.textContent = `${cuenta.saldo.toLocaleString()}`;
+    if (saldoRuleta) saldoRuleta.textContent = `${cuenta.saldo.toLocaleString()}`;
+
+}
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const usuario = localStorage.getItem('usuarioActual');
@@ -66,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cuenta = cuentas[usuario];
 
     if (!cuenta) return;
+    actualizarRuleta();
 
     const saldoActual = document.getElementById('saldo-actual');
     if (saldoActual) saldoActual.textContent = `$${cuenta.saldo.toLocaleString()}`;

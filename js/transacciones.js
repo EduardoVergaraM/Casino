@@ -69,6 +69,8 @@ function retiro() {
     document.getElementById('saldo-actual').textContent = `$${cuentas[usuario].saldo}`;
 }
 
+
+
 document.getElementById('form-deposito').addEventListener('submit', function (e) {
     e.preventDefault();
     deposito();

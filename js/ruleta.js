@@ -1,4 +1,4 @@
-let bankValue = 1000;
+let bankValue = JSON.parse(localStorage.getItem('cuentas'))[localStorage.getItem('usuarioActual')].saldo;
 let currentBet = 0;
 let wager = 5;
 let lastWager = 0;
@@ -12,21 +12,6 @@ let wheelnumbersAC = [0, 26, 3, 35, 12, 28, 7, 29, 18, 22, 9, 31, 14, 20, 1, 33,
 
 startGame();
 
-// Función para resetear el juego
-function resetGame() {
-  bankValue = 1000;
-  currentBet = 0;
-  wager = 5;
-  bet = [];
-  numbersBet = [];
-  previousNumbers = [];
-  document.getElementById('notification')?.remove();
-  document.getElementById('bankSpan').innerText = bankValue.toLocaleString();
-  document.getElementById('betSpan').innerText = currentBet.toLocaleString();
-  document.getElementById('pnContent').innerHTML = '';
-  removeChips();
-  addEventListeners();
-}
 
 // Función inicial para empezar el juego
 function startGame() {
@@ -54,7 +39,7 @@ function addEventListeners() {
 // Listeners para double streets (wlttb_top)
 function addDoubleStreetListeners() {
   document.querySelectorAll('#wlttb_top .ttbbetblock').forEach((el, i) => {
-    const num = `${1 + 3*i}, ${2 + 3*i}, ${3 + 3*i}, ${4 + 3*i}, ${5 + 3*i}, ${6 + 3*i}`;
+    const num = `${1 + 3 * i}, ${2 + 3 * i}, ${3 + 3 * i}, ${4 + 3 * i}, ${5 + 3 * i}, ${6 + 3 * i}`;
     el.onclick = () => setBet(el, num, 'double_street', 5);
     el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, num, 'double_street', 5); };
   });
@@ -122,7 +107,7 @@ function addNumberBoardListeners() {
   zero.onclick = () => setBet(zero, '0', 'zero', 35);
   zero.oncontextmenu = (e) => { e.preventDefault(); removeBet(zero, '0', 'zero', 35); };
 
-  const numberBlocks = [3,6,9,12,15,18,21,24,27,30,33,36,'2 to 1',2,5,8,11,14,17,20,23,26,29,32,35,'2 to 1',1,4,7,10,13,16,19,22,25,28,31,34,'2 to 1'];
+  const numberBlocks = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, '2 to 1', 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, '2 to 1', 1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, '2 to 1'];
   document.querySelectorAll('.number_board > div:not(.number_0)').forEach((el, i) => {
     const value = numberBlocks[i];
     if (value !== '2 to 1') {
@@ -148,10 +133,10 @@ function addBo3Listeners() {
 // Listeners para even/red/black/odd (oto_board)
 function addOtoListeners() {
   document.querySelectorAll('.oto_block').forEach((el, i) => {
-    const num = (i === 0) ? '2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36' 
-      : ((i === 1) ? '1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36' 
-      : ((i === 2) ? '2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35' 
-      : '1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35'));
+    const num = (i === 0) ? '2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36'
+      : ((i === 1) ? '1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36'
+        : ((i === 2) ? '2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35'
+          : '1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35'));
     el.onclick = () => setBet(el, num, 'outside_oerb', 1);
     el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, num, 'outside_oerb', 1); };
   });
@@ -181,14 +166,6 @@ function updateBankAndBet() {
   document.getElementById('betSpan').innerText = currentBet.toLocaleString('en-GB');
 }
 
-// Función para mostrar game over
-function gameOver() {
-  const notification = document.createElement('div');
-  notification.id = 'notification';
-  notification.innerHTML = '<span class="nSpan">Bankrupt</span><div class="nBtn" onclick="resetGame()">Play again</div>';
-  document.getElementById('container').prepend(notification);
-}
-
 // Función para limpiar apuestas
 function clearBet() {
   bet = [];
@@ -198,6 +175,7 @@ function clearBet() {
 // Función para colocar una apuesta
 function setBet(element, numbers, type, odds) {
   lastWager = wager;
+
   if (bankValue < wager) wager = bankValue;
   if (wager === 0) return;
   if (!girar) return;
@@ -208,6 +186,8 @@ function setBet(element, numbers, type, odds) {
     spinBtn.innerText = 'spin';
     spinBtn.onclick = () => { spinBtn.remove(); spin(); };
     document.getElementById('container').appendChild(spinBtn);
+    cuentas[usuario].saldo = bankValue;
+    localStorage.setItem('cuentas', JSON.stringify(cuentas));
   }
 
   bankValue -= wager;
@@ -285,6 +265,8 @@ function spin() {
 function calculateWin(winningSpin) {
   let winValue = 0;
   let betTotal = 0;
+  let saldoRuleta = document.getElementById('saldo-ruleta');
+
   if (numbersBet.includes(winningSpin)) {
     bet.forEach(b => {
       if (b.numbers.split(',').map(Number).includes(winningSpin)) {
@@ -296,8 +278,12 @@ function calculateWin(winningSpin) {
     });
     win(winningSpin, winValue, betTotal);
   }
+
+  if (saldoRuleta) saldoRuleta.textContent = `${cuenta.saldo.toLocaleString()}`;
+
   currentBet = 0;
   updateBankAndBet();
+
 
   // Agregar número ganador al historial
   const pnClass = numRed.includes(winningSpin) ? 'pnRed' : (winningSpin === 0 ? 'pnGreen' : 'pnBlack');
@@ -312,7 +298,6 @@ function calculateWin(winningSpin) {
   numbersBet = [];
   removeChips();
   wager = lastWager;
-  if (bankValue === 0) gameOver();
 }
 
 // Función para mostrar notificación de ganancia
