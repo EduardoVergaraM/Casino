@@ -78,7 +78,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (saldoActual) saldoActual.textContent = `$${cuenta.saldo.toLocaleString()}`;
     actualizarPerfil();
 
-
-
 });
 
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('spinBtn')) {
+    actualizarPerfil();
+  }
+});
