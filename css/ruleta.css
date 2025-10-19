@@ -13,15 +13,6 @@
   position: relative;
 }
 
-.ruleta {
-  flex: 0 0 auto;
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
-}
-
-/* Eliminado #ruleta ya que es estático, ahora usa .wheel */
-
 .info-saldo {
   font-family: "Lucida Handwriting", cursive;
   text-align: center;
@@ -136,13 +127,6 @@
   color: #f1f1f1;
 }
 
-/* Estilos del juego de ruleta integrados y adaptados */
-html, body {
-  font-family: arial;
-  cursor: default;
-  user-select: none;
-}
-
 #container {
   display: flex;
   justify-content: center;
@@ -151,17 +135,17 @@ html, body {
   width: 100%;
   padding: 20px;
   color: #fff;
-  margin: 0 auto; /* Centrado en tu layout */
+  margin: 0 auto;
 }
 
-/* Notification (adaptado a tu tema) */
+/* Notification */
 #notification {
   position: absolute;
   width: 500px;
   height: 318px;
   background: #ad0205;
   z-index: 10;
-  border: 8px solid gold; /* Adaptado a gold */
+  border: 8px solid gold;
   border-radius: 12px;
   transition: 1s;
 }
@@ -209,11 +193,11 @@ html, body {
   padding: 0 40px;
 }
 
-/* Betting table (adaptado a tu ancho) */
+/* Betting table */
 #betting_board {
   width: 500px;
   height: 315px;
-  border: 1px solid gold; /* Adaptado a gold */
+  border: 1px solid gold;
 }
 
 .bbtop {
@@ -390,11 +374,11 @@ html, body {
 .spinBtn {
   position: absolute;
   margin-top: 329px;
-  margin-left: -392px;
-  font-size: 15px;
+  margin-left: -325px;
+  font-size: 14px;
   cursor: pointer;
   background: #ffec00;
-  padding: 10px 5px;
+  padding: 14px 8px;
   border-radius: 100%;
   color: #000;
   font-weight: bold;
@@ -410,23 +394,23 @@ html, body {
 
 .chipDeck, .bankContainer {
   position: absolute;
-  margin-left: -383px;
-  margin-top: -74px;
-  width: 310px;
-  height: 39px;
-  padding: 3px 0;
+  margin-left: -550px;
+  margin-top: -75px;
+  width: 480px;
+  height: 50px;
+  padding: 5px 5px;
   border: 1px solid gold;
   border-radius: 10px;
-  box-shadow: inset -2px -4px rgba(0,0,0,0.2);
+  align-content: center;
 }
 
 .bankContainer {
-  margin-top: -21px;
+  margin-top: 3px;
 }
 
 .cdChip {
-  width: 27px;
-  height: 27px;
+  width: 35px;
+  height: 35px;
   background: #fff;
   border: 5px solid;
   border-radius: 100%;
@@ -434,13 +418,19 @@ html, body {
   margin-left: 9px;
   color: #000;
   cursor: pointer;
+  overflow: hidden;
+}
+
+.cdChip.custom, .cdChip.clearBet {
+  width: 65px;
+  border-radius: 50%;
 }
 
 .cdChipSpan {
   display: inherit;
   position: relative;
   top: 5px;
-  width: 26px;
+  width: 35px;
   font: bold 14px arial;
   text-align: center;
 }
@@ -454,12 +444,13 @@ html, body {
 .clearBet {
   border-color: red;
   background: red;
-  color: #fff;
-  margin-left: 22px;
+  color: white;
 }
 
-.clearBet .cdChipSpan {
-  margin-left: -2px;
+.custom {
+  border-color: purple;
+  background: purple;
+  color: white;
 }
 
 .bank, .bet {
@@ -515,7 +506,7 @@ html, body {
   height: 312px;
   width: 312px;
   position: relative;
-  left: -75px;
+  left: -90px;
 }
 
 .ballTrack {
@@ -734,4 +725,37 @@ html, body {
 
 #betting_board {
   margin-left: 20px; /* Alineado con rueda */
+}
+
+/* Estilos para modales */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 300px;
+  text-align: center;
+}
+
+.modal-content input {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 80%;
+}
+
+.modal-content button {
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
 }

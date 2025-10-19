@@ -22,7 +22,6 @@
 <main>
     <div class="general-rul">
         <div id="container">
-            <!-- Rueda de la ruleta (dinámica del JS) -->
             <div class="wheel">
                 <div class="outerRim"></div>
                 <div id="sect1" class="sect"><span class="single">0</span><div class="block"></div></div>
@@ -69,7 +68,6 @@
                 <div class="turret"></div>
                 <div class="turretHandle"><div class="thendOne"></div><div class="thendTwo"></div></div>
             </div>
-            <!-- Tablero de apuestas -->
             <div id="betting_board">
                 <div class="winning_lines">
                     <div id="wlttb_top" class="wlttb">
@@ -122,8 +120,9 @@
                     <div class="cdChip blue cdChipActive"><span class="cdChipSpan">5</span></div>
                     <div class="cdChip orange"><span class="cdChipSpan">10</span></div>
                     <div class="cdChip gold"><span class="cdChipSpan">100</span></div>
-                    <div class="cdChip clearBet"><span class="cdChipSpan">clear</span></div>
-                </div>
+                    <div class="cdChip custom"><span class="cdChipSpan">Apostar</span></div>
+                    <div class="cdChip clearBet"><span class="cdChipSpan">Cancelar</span></div>
+                </div>  
                 <div class="bankContainer">
                     <div class="bank"><span id="bankSpan">1,000</span></div>
                     <div class="bet"><span id="betSpan">0</span></div>
@@ -135,7 +134,7 @@
         </div>
         <div class="info-saldo">
             <h2>Saldo disponible</h2>
-            <p><strong id="saldo-ruleta">$1.000.000</strong></p> <!-- Dinámico con JS -->
+            <p><strong id="saldo-ruleta">$1.000.000</strong></p>
         </div>
     </div>
     <div class="estado-box">
@@ -148,7 +147,7 @@
     <div class="tablon-ganadores">
         <div class="ganadores-box">
             <h2>Últimos 5 ganadores</h2>
-            <div class="pnBlock"> <!-- Integrado del juego para historial dinámico -->
+            <div class="pnBlock">
                 <div id="pnContent"></div>
             </div>
         </div>
@@ -199,6 +198,26 @@
         </div>
     </div>
 </main>
+
+<!-- Modal para apuesta personalizada -->
+<div id="customBetModal" class="modal">
+    <div class="modal-content">
+        <h3>Colocar Apuesta Personalizada</h3>
+        <input type="number" id="customAmount" min="1" placeholder="Ingrese monto">
+        <button id="acceptCustom">Aceptar</button>
+        <button id="cancelCustom">Cancelar</button>
+    </div>
+</div>
+
+<!-- Modal para confirmar limpieza de apuesta -->
+<div id="confirmClearModal" class="modal">
+    <div class="modal-content">
+        <h3>¿Confirmar limpiar la apuesta?</h3>
+        <button id="acceptClear">Aceptar</button>
+        <button id="cancelClear">Cancelar</button>
+    </div>
+</div>
+
 <script src="js/ruleta.js"></script>
 <script src="js/commons.js"></script>
 </body>

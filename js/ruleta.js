@@ -28,6 +28,7 @@ function addEventListeners() {
   addBbtopListeners();
   addOtoListeners();
   addChipDeckListeners();
+  addModalListeners();
 }
 
 // Listeners para 1-18 y 19-36 (bbtop)
@@ -54,19 +55,46 @@ function addOtoListeners() {
 
 // Listeners para fichas (chipDeck)
 function addChipDeckListeners() {
-  document.querySelectorAll('.cdChip:not(.clearBet)').forEach(el => {
+  document.querySelectorAll('.cdChip:not(.clearBet):not(.custom)').forEach(el => {
     el.onclick = () => {
       document.querySelectorAll('.cdChipActive').forEach(active => active.classList.remove('cdChipActive'));
       el.classList.add('cdChipActive');
       wager = parseInt(el.querySelector('.cdChipSpan').innerText);
     };
   });
+  document.querySelector('.custom').onclick = () => {
+    document.getElementById('customBetModal').style.display = 'block';
+  };
   document.querySelector('.clearBet').onclick = () => {
+    document.getElementById('confirmClearModal').style.display = 'block';
+  };
+}
+
+// Listeners para modales
+function addModalListeners() {
+  document.getElementById('acceptCustom').onclick = () => {
+    let amount = parseInt(document.getElementById('customAmount').value);
+    if (amount > 0 && amount <= bankValue) {
+      wager = amount;
+      document.querySelectorAll('.cdChipActive').forEach(active => active.classList.remove('cdChipActive'));
+    }
+    document.getElementById('customBetModal').style.display = 'none';
+    document.getElementById('customAmount').value = '';
+  };
+  document.getElementById('cancelCustom').onclick = () => {
+    document.getElementById('customBetModal').style.display = 'none';
+    document.getElementById('customAmount').value = '';
+  };
+  document.getElementById('acceptClear').onclick = () => {
     bankValue += currentBet;
     currentBet = 0;
     updateBankAndBet();
     clearBet();
     removeChips();
+    document.getElementById('confirmClearModal').style.display = 'none';
+  };
+  document.getElementById('cancelClear').onclick = () => {
+    document.getElementById('confirmClearModal').style.display = 'none';
   };
 }
 
