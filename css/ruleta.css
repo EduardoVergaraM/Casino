@@ -415,7 +415,7 @@ html, body {
   width: 310px;
   height: 39px;
   padding: 3px 0;
-  border: 1px solid gold; /* Adaptado */
+  border: 1px solid gold;
   border-radius: 10px;
   box-shadow: inset -2px -4px rgba(0,0,0,0.2);
 }
@@ -465,17 +465,17 @@ html, body {
 .bank, .bet {
   display: inline-block;
   width: calc(50% - 28px);
-  background: #2f2f2f; /* Adaptado a tu tema */
+  background: #2f2f2f;
   font-size: 18px;
   margin-left: 7px;
   padding: 5px;
-  border: 4px solid gold; /* Adaptado */
+  border: 4px solid gold; 
   border-radius: 7px;
   text-align: right;
 }
 
 .pnBlock {
-  border: 1px solid gold; /* Adaptado */
+  border: 1px solid gold;
   width: 500px;
   height: 45px;
   margin-top: 10px;
@@ -507,7 +507,7 @@ html, body {
 .pnBlack { color: black; }
 .pnGreen { color: green; }
 
-/* Wheel (adaptado para encajar en tu layout) */
+/* Ruleta */
 @keyframes wheelRotate { from { transform: rotate(0deg); } to { transform: rotate(359deg); } }
 @keyframes ballRotate { from { transform: rotate(0deg); } to { transform: rotate(-359deg); } }
 
@@ -578,7 +578,7 @@ html, body {
   height: 290px;
   border-radius: 100%;
   box-shadow: 0 0 8px rgba(0,0,0,0.5);
-  border: 10px solid gold; /* Adaptado a gold */
+  border: 10px solid gold;
 }
 
 .block {
@@ -693,7 +693,7 @@ html, body {
   background: radial-gradient(circle at 100px 100px, #892c10, #000);
 }
 
-/* Chip (adaptado) */
+/* Chip */
 .chip {
   width: 21px;
   height: 21px;
@@ -728,7 +728,6 @@ html, body {
 .bo3_block .chip { margin-left: 65px; margin-top: -26px; }
 .oto_block .chip { margin-left: 45px; margin-top: -25px; }
 
-/* Ajustes para integración en tu layout */
 #container .wheel {
   margin-right: 20px; /* Espacio para saldo */
 }
