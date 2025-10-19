@@ -1,4 +1,4 @@
-let bankValue = JSON.parse(localStorage.getItem('cuentas'))[localStorage.getItem('usuarioActual')].saldo;
+let bankValue = JSON.parse(localStorage.getItem('cuentas'))[localStorage.getItem('usuarioActual')].saldo;;
 let currentBet = 0;
 let wager = 5;
 let lastWager = 0;
@@ -175,7 +175,6 @@ function clearBet() {
 // Función para colocar una apuesta
 function setBet(element, numbers, type, odds) {
   lastWager = wager;
-
   if (bankValue < wager) wager = bankValue;
   if (wager === 0) return;
   if (!girar) return;
@@ -186,8 +185,6 @@ function setBet(element, numbers, type, odds) {
     spinBtn.innerText = 'spin';
     spinBtn.onclick = () => { spinBtn.remove(); spin(); };
     document.getElementById('container').appendChild(spinBtn);
-    cuentas[usuario].saldo = bankValue;
-    localStorage.setItem('cuentas', JSON.stringify(cuentas));
   }
 
   bankValue -= wager;
@@ -265,7 +262,9 @@ function spin() {
 function calculateWin(winningSpin) {
   let winValue = 0;
   let betTotal = 0;
-  let saldoRuleta = document.getElementById('saldo-ruleta');
+  let usuario = localStorage.getItem('usuarioActual');
+  let cuentas = JSON.parse(localStorage.getItem('cuentas'));
+  let estadoCuenta = cuentas[usuario].saldo;
 
   if (numbersBet.includes(winningSpin)) {
     bet.forEach(b => {
@@ -278,10 +277,13 @@ function calculateWin(winningSpin) {
     });
     win(winningSpin, winValue, betTotal);
   }
-
-  if (saldoRuleta) saldoRuleta.textContent = `${cuenta.saldo.toLocaleString()}`;
-
   currentBet = 0;
+  estadoCuenta= bankValue;
+  cuentas[usuario].saldo = bankValue;
+  localStorage.setItem('cuentas', JSON.stringify(cuentas));
+  document.getElementById('saldo-ruleta').textContent = bankValue;
+  document.getElementById('bankSpan').textContent = bankValue;
+
   updateBankAndBet();
 
 

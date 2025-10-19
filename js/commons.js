@@ -6,7 +6,7 @@ function loggear() {
 
     let cuentas = JSON.parse(localStorage.getItem('cuentas')) || {};
     if (!cuentas[user]) {
-        cuentas[user] = { saldo: 0, movimientos: [] };
+        cuentas[user] = { saldo: 0, movimientos: [], ganadores: [], apuestas: [] };
         localStorage.setItem('cuentas', JSON.stringify(cuentas));
     }
 
@@ -31,12 +31,15 @@ function actualizarPerfil() {
     const historial = cuenta.movimientos.slice(-5);
     const saldoPerfil = document.getElementById('saldo-usuario');
     const usuarioPerfil = document.getElementById('usuario-perfil');
+    const saldoRuleta = document.getElementById('saldo-ruleta');
+    const saldoBanco = document.getElementById('bankSpan');
 
 
 
     if (saldoPerfil) saldoPerfil.textContent = `$${cuenta.saldo.toLocaleString()}`;
     if (usuarioPerfil) usuarioPerfil.textContent = `${usuario.toLowerCase()}`;
-
+    if (saldoRuleta) saldoRuleta.textContent = `${cuenta.saldo.toLocaleString()}`;
+    if (saldoBanco) saldoBanco.textContent = `${cuenta.saldo.toLocaleString()}`;
 
 
     const tablaPerfil = document.getElementById('registro');
@@ -61,18 +64,6 @@ function actualizarPerfil() {
 
 }
 
-function actualizarRuleta() {
-    const usuario = localStorage.getItem('usuarioActual');
-    const cuentas = JSON.parse(localStorage.getItem('cuentas'));
-    const cuenta = cuentas[usuario];
-    const saldoRuleta = document.getElementById('saldo-ruleta');
-    const saldoBanco = document.getElementById('bankSpan');
-
-    if (saldoBanco) saldoBanco.textContent = `${cuenta.saldo.toLocaleString()}`;
-    if (saldoRuleta) saldoRuleta.textContent = `${cuenta.saldo.toLocaleString()}`;
-
-}
-
 
 document.addEventListener('DOMContentLoaded', function () {
     const usuario = localStorage.getItem('usuarioActual');
@@ -82,11 +73,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const cuenta = cuentas[usuario];
 
     if (!cuenta) return;
-    actualizarRuleta();
 
     const saldoActual = document.getElementById('saldo-actual');
     if (saldoActual) saldoActual.textContent = `$${cuenta.saldo.toLocaleString()}`;
     actualizarPerfil();
+
+
 
 });
 
