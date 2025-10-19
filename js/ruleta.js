@@ -26,7 +26,6 @@ function startGame() {
 // Función principal para agregar listeners a todas las áreas de apuestas
 function addEventListeners() {
   addBbtopListeners();
-  addNumberBoardListeners();
   addOtoListeners();
   addChipDeckListeners();
 }
@@ -39,13 +38,6 @@ function addBbtopListeners() {
     el.onclick = () => setBet(el, num, type, 1);
     el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, num, type, 1); };
   });
-}
-
-// Listeners para números, cero y columnas (number_board)
-function addNumberBoardListeners() {
-  const zero = document.querySelector('.number_0');
-  zero.onclick = () => setBet(zero, '0', 'zero', 35);
-  zero.oncontextmenu = (e) => { e.preventDefault(); removeBet(zero, '0', 'zero', 35); };
 }
 
 // Listeners para par/rojo/negro/impar (oto_board)
