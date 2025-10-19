@@ -39,8 +39,15 @@
                     placeholder="XXXX XXXX XXXX XXXX" step="1">
 
                 <label for="expiracion">Fecha de expiracion</label>
-                <input type="month" id="expiracion" required placeholder="MM/YY">
+                <div class="fecha-exp">
+                    <label for="year">Año</label>
+                    <input type="text" id="year" required placeholder="Año" maxlength="2" setp="1" pattern="\d{2}">
 
+                    <label for="mes">Mes</label>
+                    <input type="text" id="mes" required placeholder="Mes" maxlength="2" step="1" pattern="\d{2}">
+
+                    <span id="error-exp"></span>
+                </div>
                 <label for="ccv">Numero de seguridad/CCV</label>
                 <input type="text" id="ccv" maxlength="3" pattern="\d{3}" required step="1">
 
@@ -58,14 +65,12 @@
                 <legend>Ingresa tus datos para retirar</legend>
 
                 <label for="titular-r">Titular</label>
-                <input id="titular-r" type="text"  title="Nombre del titular"
-                    min="1" required>
+                <input id="titular-r" type="text" title="Nombre del titular" min="1" required>
 
                 <label for="n-cuenta">Numero de cuenta</label>
-                <input id="n-cuenta" type="number" title="Numero de cuenta"
-                    min="1" required>
+                <input id="n-cuenta" type="number" title="Numero de cuenta" min="1" required>
 
-                
+
                 <label for="banco">Banco</label>
                 <select id="banco" name="banco">
                     <option value="">Selecciona un banco</option>
@@ -76,13 +81,49 @@
 
 
                 <label for="retiro">Monto a retirar</label>
-                <input id="retiro" type="number" placeholder="$1000000" title="Numero del monto a retirar"
-                    min="1" step="1" required>
+                <input id="retiro" type="number" placeholder="$1000000" title="Numero del monto a retirar" min="1"
+                    step="1" required>
 
                 <button type="submit" class="form"> Retira </button>
 
             </fieldset>
         </form>
+
+
+        <div id="modal-confirmar-deposito" class="modal">
+            <div class="contenido-modal">
+                <span class="cerrar" onclick="cerrarModal('modal-confirmar-deposito')">&times;</span>
+                <h2>Confirmar Depósito</h2>
+                <p>Deseas realizar la operación?</p>
+                <div class="botones-modal">
+                    <button id="boton-confirmar-deposito">Confirmar</button>
+                    <button id="boton-cancelar-deposito">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="modal-confirmar-retiro" class="modal">
+            <div class="contenido-modal">
+                <span class="cerrar" onclick="cerrarModal('modal-confirmar-retiro')">&times;</span>
+                <h2>Confirmar Retiro</h2>
+                <p>Deseas realizar la operación?</p>
+                <div class="botones-modal">
+                    <button id="boton-confirmar-retiro">Confirmar</button>
+                    <button id="boton-cancelar-retiro">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-realizado" class="modal">
+            <div class="contenido-modal">
+                <span class="cerrar" onclick="cerrarModal('modal-realizado')">&times;</span>
+                <h2>Transacción exitosa</h2>
+                <p>Operación realizada efectivamente</p>
+                <button id="boton-cerrar-realizado">Cerrar</button>
+            </div>
+        </div>
+
 
     </main>
     <script src="js/transacciones.js"></script>

@@ -286,7 +286,7 @@ input[type="text"],
 input[type="email"],
 input[type="date"],
 input[type="password"],
-input[type="number" ],
+input[type="number"],
 input[type="month"],
 select {
   display: block;
@@ -429,4 +429,68 @@ button.form{
 .saldo-transf h2{
   font-family:"Lucida Handwriting", cursive ;
   color:gold;
+}
+
+.modal{
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.contenido-modal{
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  color: #000 !important;
+  border-radius: 10px;
+  width:80%;
+  max-width:400px;
+  text-align:center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.cerrar {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.botones-modal {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+#boton-confirmar-retiro, #boton-cancelar-retiro,#boton-confirmar-deposito,#boton-cancelar-deposito, #boton-cerrar-realizado {
+  background: #28a745;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* #boton-cancelar-retiro { background: #dc3545; }
+#boton-confirmar-deposito:hover { background: #218838; }
+#boton-cancelar-deposito:hover { background: #c82333; }
+#boton-cancelar-retiro:hover { background: #c82333; }
+#boton-confirmar-retiro:hover { background: #218838; }
+#boton-cerrar-realizado { background: #007bff; }
+#boton-cerrar-realizado:hover { background: #0069d9; } */
+#boton-cancelar-retiro, #boton-cancelar-deposito { background: #dc3545; }
+#boton-cancelar-retiro:hover, #boton-cancelar-deposito:hover { background: #c82333; }
+#boton-confirmar-retiro:hover, #boton-confirmar-deposito:hover { background: #218838; }
+#boton-cerrar-realizado { background: #007bff; }
+#boton-cerrar-realizado:hover { background: #0069d9; }
+
+.fecha-exp{
+  display: flex;
+    gap: 10px;
+    align-items: center;
 }
