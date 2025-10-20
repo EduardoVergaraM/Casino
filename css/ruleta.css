@@ -375,6 +375,7 @@
 
 .spinBtn {
   position: absolute;
+  font-family:"Lucida Handwriting", cursive;
   margin-top: 329px;
   margin-left: -325px;
   font-size: 14px;
@@ -382,7 +383,7 @@
   background: #ffec00;
   padding: 14px 8px;
   border-radius: 100%;
-  color: #000;
+  color: #2f2f2f;
   font-weight: bold;
 }
 
@@ -433,7 +434,8 @@
   position: relative;
   top: 5px;
   width: 35px;
-  font: bold 14px arial;
+  font-family:"Lucida Handwriting", cursive;
+  font-size: 12px ;
   text-align: center;
 }
 
@@ -665,8 +667,9 @@
 }
 
 .chipSpan {
+  font-family:"Lucida Handwriting", cursive;
+  font-size: 9px;
   color: #000;
-  font: bold 11px arial;
   position: relative;
   display: block;
   text-align: center;
