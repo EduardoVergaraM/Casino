@@ -207,10 +207,11 @@ function spin() {
 function calculateWin(winningSpin) {
   let winValue = 0;
   let betTotal = 0;
-  let usuario = localStorage.getItem('usuarioActual');
-  let cuentas = JSON.parse(localStorage.getItem('cuentas'));
+  const usuario = localStorage.getItem('usuarioActual');
+  const cuentas = JSON.parse(localStorage.getItem('cuentas'));
   let estadoCuenta = cuentas[usuario].saldo;
 
+  // Calcular ganancias
   if (numbersBet.includes(winningSpin)) {
     bet.forEach(b => {
       if (b.numbers.split(',').map(Number).includes(winningSpin)) {
@@ -222,24 +223,27 @@ function calculateWin(winningSpin) {
     });
     win(winningSpin, winValue, betTotal);
   }
+
   currentBet = 0;
-  estadoCuenta= bankValue;
+  estadoCuenta = bankValue;
   cuentas[usuario].saldo = bankValue;
+
+  if (!cuentas[usuario].apuestas) cuentas[usuario].apuestas = [];
+
+  // Guardar apuestas en historial
+  bet.forEach(b => {
+    const gano = b.numbers.split(',').map(Number).includes(winningSpin);
+    cuentas[usuario].apuestas.push({
+      tipo: b.type,
+      monto: b.amt,
+      resultado: gano ? 'Victoria' : 'Derrota',
+      variacion: gano ? b.amt * b.odds : -b.amt
+    });
+  });
+
   localStorage.setItem('cuentas', JSON.stringify(cuentas));
-  document.getElementById('saldo-ruleta').textContent = bankValue;
-  document.getElementById('bankSpan').textContent = bankValue;
-
+  actualizarTablaApuestas();
   updateBankAndBet();
-
-
-  // Agregar número ganador al historial
-  const pnClass = numRed.includes(winningSpin) ? 'pnRed' : (winningSpin === 0 ? 'pnGreen' : 'pnBlack');
-  const pnSpan = document.createElement('span');
-  pnSpan.className = pnClass;
-  pnSpan.innerText = winningSpin;
-  const pnContent = document.getElementById('pnContent');
-  pnContent.appendChild(pnSpan);
-  pnContent.scrollLeft = pnContent.scrollWidth;
 
   bet = [];
   numbersBet = [];
@@ -249,68 +253,103 @@ function calculateWin(winningSpin) {
 
 // Función para mostrar notificación de ganancia
 function win(winningSpin, winValue, betTotal) {
-  if (winValue === 0) return;
-  const notification = document.createElement('div');
-  notification.id = 'notification';
-  const nSpan = document.createElement('div');
-  nSpan.className = 'nSpan';
-  const nsNumber = document.createElement('span');
-  nsNumber.className = 'nsnumber';
-  nsNumber.style.color = numRed.includes(winningSpin) ? 'red' : 'black';
-  nsNumber.innerText = winningSpin;
-  nSpan.appendChild(nsNumber);
-  nSpan.appendChild(document.createTextNode(' Win'));
-  const nsWin = document.createElement('div');
-  nsWin.className = 'nsWin';
-  nsWin.innerHTML = `
+      if (winValue === 0) return;
+      const notification = document.createElement('div');
+      notification.id = 'notification';
+      const nSpan = document.createElement('div');
+      nSpan.className = 'nSpan';
+      const nsNumber = document.createElement('span');
+      nsNumber.className = 'nsnumber';
+      nsNumber.style.color = numRed.includes(winningSpin) ? 'red' : 'black';
+      nsNumber.innerText = winningSpin;
+      nSpan.appendChild(nsNumber);
+      nSpan.appendChild(document.createTextNode(' Win'));
+      const nsWin = document.createElement('div');
+      nsWin.className = 'nsWin';
+      nsWin.innerHTML = `
     <div class="nsWinBlock">Bet: ${betTotal}</div>
     <div class="nsWinBlock">Win: ${winValue}</div>
     <div class="nsWinBlock">Payout: ${winValue + betTotal}</div>
   `;
-  nSpan.appendChild(nsWin);
-  notification.appendChild(nSpan);
-  document.getElementById('container').prepend(notification);
-  setTimeout(() => notification.style.opacity = '0', 3000);
-  setTimeout(() => notification.remove(), 4000);
-}
+      nSpan.appendChild(nsWin);
+      notification.appendChild(nSpan);
+      document.getElementById('container').prepend(notification);
+      setTimeout(() => notification.style.opacity = '0', 3000);
+      setTimeout(() => notification.remove(), 4000);
+    }
 
 // Función para animar la rueda
 function spinWheel(winningSpin) {
-  const wheel = document.querySelector('.wheel');
-  const ballTrack = document.querySelector('.ballTrack');
-  const degree = wheelnumbersAC.indexOf(winningSpin) * 9.73 + 362;
+      const wheel = document.querySelector('.wheel');
+      const ballTrack = document.querySelector('.ballTrack');
+      const degree = wheelnumbersAC.indexOf(winningSpin) * 9.73 + 362;
 
-  // Animación inicial rápida
-  wheel.style.animation = 'wheelRotate 5s linear infinite';
-  ballTrack.style.animation = 'ballRotate 1s linear infinite';
+      // Animación inicial rápida
+      wheel.style.animation = 'wheelRotate 5s linear infinite';
+      ballTrack.style.animation = 'ballRotate 1s linear infinite';
 
-  // Ralentizar bola después de 2s
-  setTimeout(() => {
-    ballTrack.style.animation = 'ballRotate 2s linear infinite';
-  }, 2000);
+      // Ralentizar bola después de 2s
+      setTimeout(() => {
+        ballTrack.style.animation = 'ballRotate 2s linear infinite';
+      }, 2000);
 
-  // Detener bola en posición ganadora después de 6s
-  setTimeout(() => {
-    const style = document.createElement('style');
-    style.innerText = `@keyframes ballStop { from { transform: rotate(0deg); } to { transform: rotate(-${degree}deg); } }`;
-    document.head.appendChild(style);
-    ballTrack.style.animation = 'ballStop 3s linear';
-    setTimeout(() => style.remove(), 3000); // Limpiar estilo
-  }, 6000);
+      // Detener bola en posición ganadora después de 6s
+      setTimeout(() => {
+        const style = document.createElement('style');
+        style.innerText = `@keyframes ballStop { from { transform: rotate(0deg); } to { transform: rotate(-${degree}deg); } }`;
+        document.head.appendChild(style);
+        ballTrack.style.animation = 'ballStop 3s linear';
+        setTimeout(() => style.remove(), 3000); // Limpiar estilo
+      }, 6000);
 
-  // Posición final de bola después de 9s
-  setTimeout(() => {
-    ballTrack.style.transform = `rotate(-${degree}deg)`;
-  }, 9000);
+      // Posición final de bola después de 9s
+      setTimeout(() => {
+        ballTrack.style.transform = `rotate(-${degree}deg)`;
+      }, 9000);
 
-  // Detener rueda después de 10s
-  setTimeout(() => {
-    wheel.style.animation = '';
-    girar = true;
-  }, 10000);
-}
+      // Detener rueda después de 10s
+      setTimeout(() => {
+        wheel.style.animation = '';
+        girar = true;
+      }, 10000);
+    }
 
 // Función para remover todos los chips
 function removeChips() {
-  document.querySelectorAll('.chip').forEach(chip => chip.remove());
-}
+      document.querySelectorAll('.chip').forEach(chip => chip.remove());
+    }
+
+window.addEventListener('storage', (event) => {
+      if (event.key === 'saldoActualizado' && event.newValue === 'true') {
+        console.log('Saldo actualizado desde otra pestaña, recargando ruleta...');
+        location.reload();
+        localStorage.setItem('saldoActualizado', 'false');
+      }
+    });
+
+  function actualizarTablaApuestas() {
+    const usuario = localStorage.getItem('usuarioActual');
+    if (!usuario) return;
+
+    const cuentas = JSON.parse(localStorage.getItem('cuentas')) || {};
+    const cuenta = cuentas[usuario];
+    if (!cuenta || !cuenta.apuestas) return;
+
+    const cuerpoTabla = document.getElementById('tabla-ultimas-apuestas');
+    if (!cuerpoTabla) return;
+
+    cuerpoTabla.innerHTML = '';
+
+    cuenta.apuestas.slice(-5).forEach(apuesta => {
+      const fila = document.createElement('tr');
+      fila.innerHTML = `
+      <td>${apuesta.numero ?? '-'}</td>
+      <td>$${apuesta.monto?.toLocaleString() ?? 0}</td>
+      <td>${apuesta.resultado ?? 'Pendiente'}</td>
+      <td>${apuesta.variacion >= 0 ? '+' : '-'}$${Math.abs(apuesta.variacion).toLocaleString()}</td>
+    `;
+      cuerpoTabla.appendChild(fila);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', actualizarTablaApuestas);

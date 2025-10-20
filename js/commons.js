@@ -83,5 +83,4 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('click', (e) => {
   if (e.target.classList.contains('spinBtn')) {
     actualizarPerfil();
-  }
-});
+}});

@@ -59,6 +59,7 @@ function retiro() {
 
     localStorage.setItem('cuentas', JSON.stringify(cuentas));
     document.getElementById('saldo-actual').textContent = `$${cuentas[usuario].saldo}`;
+    localStorage.setItem('saldoActualizado', 'true');
 }
 
 function abrirModal(id) {
@@ -89,10 +90,6 @@ document.getElementById('form-deposito').addEventListener('submit', function(e){
 // Formulario Retiro
 document.getElementById('form-retiro').addEventListener('submit', function(e){
     e.preventDefault();
-    if(verificaExp()){
-        alert('FECHA DE EXPIRACION DE LA TARJETA CADUCADA');
-        return;
-    }
     abrirModal('modal-confirmar-retiro');
 });
 
