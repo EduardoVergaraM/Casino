@@ -212,6 +212,8 @@
   margin-left: -2px;
   text-align: center;
   font: bold 20px arial;
+  user-select: none;
+  cursor: pointer;
 }
 
 .number_board {
@@ -225,6 +227,8 @@
   display: inline-block;
   margin: 0 -0.2px;
   padding: 32px 0;
+  user-select: none;
+  cursor: pointer;
 }
 
 .nbn {
@@ -246,6 +250,8 @@
   margin-left: -1.98px;
   text-align: center;
   font: bold 20px arial;
+  user-select: none;
+  cursor: pointer;
 }
 
 .oto_block {
@@ -268,6 +274,8 @@
   margin-left: 498px;
   padding: 31.65px 0;
   margin-top: -89.75px;
+  user-select: none;
+  cursor: pointer;
 }
 
 .winning_lines {
@@ -562,7 +570,7 @@
 .double, .single {
   position: absolute;
   z-index: 1;
-  color: #fff;
+  color: white;
   font-size: 14px;
   transform: rotate(3deg);
   left: 148px;
@@ -580,7 +588,7 @@
 
 #sect3 .block, #sect5 .block, #sect7 .block, #sect9 .block, #sect11 .block, #sect13 .block, #sect15 .block, #sect17 .block, #sect19 .block, #sect21 .block, #sect23 .block, #sect25 .block, #sect27 .block, #sect29 .block, #sect31 .block, #sect33 .block, #sect35 .block, #sect37 .block {
   background: #000;
-  transform: rotate(9.73deg);
+  transform: rotate(9.73deg)
 }
 
 #sect2 { transform: rotate(9.73deg); }
