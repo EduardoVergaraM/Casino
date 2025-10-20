@@ -529,38 +529,6 @@
   top: -8px;
 }
 
-.turret {
-  border-radius: 100%;
-  background: radial-gradient(circle at 30% 30%, #f3c620, #1a1608);
-  width: 45px;
-  height: 45px;
-  position: absolute;
-  top: 133px;
-  left: 134px;
-  z-index: 1;
-}
-
-.turretHandle {
-  background: radial-gradient(circle at 44%, #f3c620, #6a570f);
-  width: 87px;
-  height: 14px;
-  position: absolute;
-  left: 113px;
-  top: 148px;
-}
-
-.thendOne, .thendTwo {
-  border-radius: 100%;
-  background: radial-gradient(circle at 30% 30%, #f3c620, #1a1608);
-  width: 25px;
-  height: 25px;
-  position: absolute;
-  top: -6px;
-}
-
-.thendOne { left: -20px; }
-.thendTwo { left: 83px; }
-
 .outerRim {
   position: absolute;
   left: 0;
@@ -670,7 +638,7 @@
   width: 235px;
   height: 235px;
   border-radius: 100%;
-  border: 3px solid silver;
+  border: 3px solid gold;
 }
 
 .cone {
@@ -679,7 +647,7 @@
   left: 61px;
   height: 180px;
   width: 180px;
-  border: 3px solid #9f9a9a;
+  border: 3px solid gold;
   border-radius: 100%;
   background: radial-gradient(circle at 100px 100px, #892c10, #000);
 }
