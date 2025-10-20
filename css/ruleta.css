@@ -125,7 +125,6 @@
 #container {
   display: flex;
   justify-content: center;
-  background: #016D29;
   height: 465px;
   width: 100%;
   padding: 20px;
@@ -652,7 +651,7 @@
   width: 180px;
   border: 3px solid gold;
   border-radius: 100%;
-  background: radial-gradient(circle at 100px 100px, #892c10, #000);
+  background: #202027;
 }
 
 /* Chip */
