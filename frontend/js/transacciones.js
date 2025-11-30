@@ -16,7 +16,7 @@ async function deposito() {
     const montoForm = document.getElementById('deposito').value;
 
     try{
-        const response = await fetch('/api/user/deposito',{
+        const response = await fetch('/api/user/deposit',{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({amount: montoForm})
@@ -26,7 +26,7 @@ async function deposito() {
 
         if(response.ok){
 
-            document.getElementById('saldo-actual').textContent = `$${data.nuevoSaldo}`;
+            document.getElementById('saldo-actual'.textContent = `$${data.nuevoSaldo}`);
             return true;
         }else{
             alert(data.message);
@@ -45,7 +45,7 @@ async function retiro() {
     const montoForm = document.getElementById('retiro').value;
 
     try{
-        const response = await fetch('/api/user/retiro',{
+        const response = await fetch('/api/user/withdraw',{
             method:'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({amount: montoForm})

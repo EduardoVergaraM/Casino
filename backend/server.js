@@ -1,9 +1,10 @@
+require('dotenv').config();
 const apiRoutes = require('./routes/index.js');
 const config = require('../commons/configs/site.config.js');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const {connectDB} = require('../Utils/bd.js')
+const {connectDB} = require('/Utils/db.js')
 
 const app = express();
 app.use(express.json());

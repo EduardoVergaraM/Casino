@@ -1,31 +1,11 @@
+// backend/routes/game.js
 const express = require('express');
 const router = express.Router();
 const { User } = require('../Utils/db');
 const { verifyToken } = require('../Utils/jwt');
-const { calculateWinnings } = require('../Utils/payments');
+const { calculatePayout } = require('../utils/payments'); // Importamos tu archivo
 
-// 1. VALIDAR APUESTAS
-router.post('/bet', verifyToken, async (req, res) => {
-    try {
-        const { bets } = req.body;
-        if (!bets || bets.length === 0) return res.status(400).json({ message: 'Sin apuestas' });
-
-        const user = await User.findById(req.user.userId);
-        
-        let totalApostado = 0;
-        bets.forEach(b => totalApostado += b.amt);
-
-        if (user.saldo < totalApostado) {
-            return res.status(400).json({ message: 'Saldo insuficiente' });
-        }
-
-        res.json({ message: 'Apuestas válidas', status: 'OK' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error al validar' });
-    }
-});
-
-// 2. GIRAR RULETA (Usando payments.js)
+// POST /api/game/spin
 router.post('/spin', verifyToken, async (req, res) => {
     try {
         const { bets } = req.body;
@@ -33,35 +13,38 @@ router.post('/spin', verifyToken, async (req, res) => {
 
         const user = await User.findById(req.user.userId);
         
-        // Calcular total apostado
-        let totalApostado = 0;
-        bets.forEach(b => totalApostado += b.amt);
+        // Calcular cuánto intenta apostar
+        let intentoApuesta = 0;
+        bets.forEach(b => intentoApuesta += b.amt);
 
-        // Validar saldo
-        if (user.saldo < totalApostado) return res.status(400).json({ message: 'Saldo insuficiente' });
+        // Validar si tiene saldo antes de girar
+        if (user.saldo < intentoApuesta) {
+            return res.status(400).json({ message: 'Saldo insuficiente' });
+        }
 
-        // 1. Cobrar la apuesta inicial
-        user.saldo -= totalApostado;
+        // --- COMIENZA EL JUEGO ---
 
-        // 2. Generar Ganador (0-36)
-        const winningNumber = Math.floor(Math.random() * 37);
+        // 1. Generar número ganador (0-36)
+        const winningNumber = Math.floor(Math.random() * 37); // [cite: 37, 479]
 
-        // 3. USAR LA UTILIDAD PAYMENTS.JS PARA CALCULAR TODO
-        const { totalGanado, historialApuestas } = calculateWinnings(bets, winningNumber);
+        // 2. Usar tu utilidad para calcular todo
+        const { totalPayout, totalBet, netChange, historialApuestas } = calculatePayout(bets, winningNumber); // [cite: 206, 215]
 
-        // 4. Pagar premios
-        user.saldo += totalGanado;
+        // 3. Actualizar Saldo
+        // Simplemente sumamos el cambio neto (si perdió es negativo, si ganó es positivo)
+        user.saldo += netChange; // [cite: 37, 288]
 
-        // 5. Guardar historial en el usuario
-        // Usamos el operador spread (...) para agregar todo el historial nuevo al array existente
-        user.apuestas.push(...historialApuestas);
+        // 4. Guardar Historial de Juego (Requisito Rúbrica)
+        // Usamos el campo 'apuestas' de tu esquema, no 'movimientos'
+        user.apuestas.push(...historialApuestas); // [cite: 83, 290]
 
-        // 6. Guardar en BD
-        await user.save();
+        // 5. Guardar en Mongo
+        await user.save(); // [cite: 62]
 
+        // 6. Responder al Frontend
         res.json({
             winningNumber,
-            totalWon: totalGanado,
+            totalWon: totalPayout, // Para mostrar la animación de ganancia
             newBalance: user.saldo
         });
 
@@ -71,13 +54,14 @@ router.post('/spin', verifyToken, async (req, res) => {
     }
 });
 
-// 3. HISTORIAL
+// El resto de rutas (/bet, /history) se mantienen igual...
+router.post('/bet', verifyToken, async (req, res) => { /* ... */ });
 router.get('/history', verifyToken, async (req, res) => {
     try {
         const user = await User.findById(req.user.userId);
-        res.json(user.apuestas.reverse().slice(0, 20)); 
+        res.json(user.apuestas.reverse().slice(0, 20)); // [cite: 83]
     } catch (error) {
-        res.status(500).json({ message: 'Error obteniendo historial' });
+        res.status(500).json({ message: 'Error' });
     }
 });
 

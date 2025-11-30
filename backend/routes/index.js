@@ -3,8 +3,8 @@ const router = express.Router();
 
 require("./heartbeat")(router);
 
-const authRoutes = require('../auth');
-const userRoutes = require('../user');
+const authRoutes = require('./auth');
+const userRoutes = require('./user');
 const gameRoutes = require('./game');
 
 router.use('/auth', authRoutes);

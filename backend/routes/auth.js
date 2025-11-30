@@ -69,7 +69,7 @@ router.post('/login', async(req,res)=> {
     try{
         const{username, password} = req.body;
 
-        const user = await user.findOne({username});
+        const user = await User.findOne({username});
         if(!user){
             return res.status(400).json({message: 'Usuario no encontrado'});
         }
@@ -94,8 +94,9 @@ router.post('/login', async(req,res)=> {
 });
 
 // == Cerrar sesion ==========
-router.psot('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
     res.cookie('jwt','', {expires: new Date(0)});
     res.json({message: 'Sesion cerrada'});
 });
 
+module.exports = router;

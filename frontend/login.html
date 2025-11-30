@@ -4,11 +4,10 @@
 <head>
     <link rel="stylesheet" href="css/style.css">
     <title>Inicia sesion</title>
-
 </head>
 
 <body>
-<header>
+    <header>
         <div class="left">
             <a href="index.html" class="logo-container">
                 <img src="images/logo.png" alt="Casino-Logo" class="logo">
@@ -25,25 +24,28 @@
         </div>
     </header>
 
-<main>
+    <main>
+        <form id="loginForm">
+            <fieldset>
+                <legend>Ingresa tus datos</legend>
 
-    <form>
-        <fieldset>
-            <legend>Ingresa a tus datos</legend>
+                <div id="mensaje" style="margin-bottom: 10px; font-weight: bold;"></div>
 
-            <label for="usuario-login">Ingresa tu nombre de usuario </label>
-            <input id="usuario-login" type="text" required title="Ingresa tu nombre de usuario">
+                <label for="username">Ingresa tu nombre de usuario </label>
+                <input id="username" type="text" required title="Ingresa tu nombre de usuario">
 
-            <label for="contrasena-login">Ingresa tu contraseña </label>
-            <input id="contrasena-login" type="password" required title="Ingresa tu contrasena">
+                <label for="password">Ingresa tu contraseña </label>
+                <input id="password" type="password" required title="Ingresa tu contrasena">
 
-            <button type="submit" value="Ingresar" class="form">Ingresar</button>
-            <p> ¿No tienes cuenta? Registrate <a href="registro.html">aqui </a> </p>
+                <button type="submit" class="form">Ingresar</button>
+                <p> ¿No tienes cuenta? Registrate <a href="registro.html">aqui </a> </p>
 
-        </fieldset>
-    </form>
-    <script src="js/commons.js"></script>
+            </fieldset>
+        </form>
+        
+        <script src="js/commons.js"></script>
+        <script src="js/login.js"></script> 
 
-</main>
+    </main>
 </body>
 </html>
