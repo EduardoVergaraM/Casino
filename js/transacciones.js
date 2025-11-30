@@ -12,54 +12,60 @@ function verificaExp() {
     }
 }
 
-function deposito() {
-    let usuario = localStorage.getItem('usuarioActual');
-    let cuentas = JSON.parse(localStorage.getItem('cuentas'));
-    let saldo = cuentas[usuario].saldo;
+async function deposito() {
+    const montoForm = document.getElementById('deposito').value;
 
-    let monto = Number(document.getElementById('deposito').value);
+    try{
+        const response = await fetch('/api/user/deposito',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({amount: montoForm})
+        });
 
-    cuentas[usuario].saldo += monto;
-    const actual = new Date();
-    cuentas[usuario].movimientos.push({
-        tipo: 'Depósito',
-        valor: "+" + monto,
-        fecha: actual.toLocaleDateString(),
-        hora: actual.toLocaleTimeString()
+        const data = await response.json();
 
-    })
+        if(response.ok){
 
-    localStorage.setItem('cuentas', JSON.stringify(cuentas));
-    document.getElementById('saldo-actual').textContent = `$${cuentas[usuario].saldo}`;
+            document.getElementById('saldo-actual').textContent = `$${data.nuevoSaldo}`;
+            return true;
+        }else{
+            alert(data.message);
+            return false;
+        }
+    }catch(error){
+        console.error('Error:', error);
+        alert('Error de conexion con el servidor' || 'Error al realizar deposito');
+        return false;
+    }
 
 }
 
 
-function retiro() {
-    let usuario = localStorage.getItem('usuarioActual');
-    let cuentas = JSON.parse(localStorage.getItem('cuentas'));
-    let saldo = cuentas[usuario].saldo;
+async function retiro() {
+    const montoForm = document.getElementById('retiro').value;
 
-    let monto = Number(document.getElementById('retiro').value);
+    try{
+        const response = await fetch('/api/user/retiro',{
+            method:'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({amount: montoForm})
+        });
 
-    if (monto > saldo) {
-        alert('MONTO SUPERIOR AL DISPONIBLE');
-        return;
+        const data = await response.json();
+
+        if(response.ok){
+            document.getElementById('saldo-actual'.textContent = `$${data.nuevoSaldo}`);
+            return true;
+        }else{
+            alert(data.message || 'Error al realizar deposito');
+            return false;
+        }
+
+    }catch(error){
+        console.error('Error:',error);
+        alert('Error de conexion con el servidor');
+        return false;
     }
-
-    cuentas[usuario].saldo -= monto;
-    const actual = new Date();
-    cuentas[usuario].movimientos.push({
-        tipo: 'Retiro',
-        valor: -monto,
-        fecha: actual.toLocaleDateString(),
-        hora: actual.toLocaleTimeString()
-
-    })
-
-    localStorage.setItem('cuentas', JSON.stringify(cuentas));
-    document.getElementById('saldo-actual').textContent = `$${cuentas[usuario].saldo}`;
-    localStorage.setItem('saldoActualizado', 'true');
 }
 
 function abrirModal(id) {
@@ -94,20 +100,27 @@ document.getElementById('form-retiro').addEventListener('submit', function(e){
 });
 
 // Botones Modal Confirmar Depósito
-document.getElementById('boton-confirmar-deposito').addEventListener('click', () => {
-    deposito();
+document.getElementById('boton-confirmar-deposito').addEventListener('click', async () => {
+
+    const exito = await deposito();
     cerrarModal('modal-confirmar-deposito');
-    abrirModal('modal-realizado');
+
+    if(exito){
+        abrirModal('modal-realizado');
+    }
 });
 document.getElementById('boton-cancelar-deposito').addEventListener('click', () => {
     cerrarModal('modal-confirmar-deposito');
 });
 
 // Botones Modal Confirmar Retiro
-document.getElementById('boton-confirmar-retiro').addEventListener('click', () => {
-    retiro();
+document.getElementById('boton-confirmar-retiro').addEventListener('click', async () => {
+    const exito = await retiro();
     cerrarModal('modal-confirmar-retiro');
-    abrirModal('modal-realizado');
+
+    if(exito){
+        abrirModal('modal-realizado');
+    }
 });
 document.getElementById('boton-cancelar-retiro').addEventListener('click', () => {
     cerrarModal('modal-confirmar-retiro');
@@ -118,4 +131,17 @@ document.getElementById('boton-cerrar-realizado').addEventListener('click', () =
     cerrarModal('modal-realizado');
 });
 
+window.addEventListener('DOMContentLoaded', async() =>{
+    try{
+        const res = await fetch('/api/user/profile');
+        if (res.ok){
+            const user = await res.json();
 
+            document.getElementById('saldo-actual').textContent = `$${user.saldo}`;
+        }else{
+             window.location.href = 'login.html';
+        }
+    }catch(error){
+        console.error('Error cargando perfil:', error);
+    }
+});
