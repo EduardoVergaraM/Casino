@@ -25,10 +25,71 @@ function startGame() {
 
 // Función principal para agregar listeners a todas las áreas de apuestas
 function addEventListeners() {
+  addDoubleStreetListeners();
+  addSplitStreetListeners();
+  addVerticalSplitListeners();
+  addCornerListeners();
   addBbtopListeners();
+  addNumberBoardListeners();
+  addBo3Listeners();
   addOtoListeners();
   addChipDeckListeners();
   addModalListeners();
+}
+
+// Listeners para double streets (wlttb_top)
+function addDoubleStreetListeners() {
+  document.querySelectorAll('#wlttb_top .ttbbetblock').forEach((el, i) => {
+    const num = `${1 + 3*i}, ${2 + 3*i}, ${3 + 3*i}, ${4 + 3*i}, ${5 + 3*i}, ${6 + 3*i}`;
+    el.onclick = () => setBet(el, num, 'double_street', 5);
+    el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, num, 'double_street', 5); };
+  });
+}
+
+// Listeners para splits y streets (wlttb_1 a 3)
+function addSplitStreetListeners() {
+  [1, 2, 3].forEach(c => {
+    document.querySelectorAll(`#wlttb_${c} .ttbbetblock`).forEach((el, i) => {
+      let num, type, odds;
+      if (c < 3) {
+        num = `${(2 - (c - 1)) + 3 * i}, ${(3 - (c - 1)) + 3 * i}`;
+        type = 'split';
+        odds = 17;
+      } else {
+        num = `${1 + 3 * i}, ${2 + 3 * i}, ${3 + 3 * i}`;
+        type = 'street';
+        odds = 11;
+      }
+      el.onclick = () => setBet(el, num, type, odds);
+      el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, num, type, odds); };
+    });
+  });
+}
+
+// Listeners para vertical splits (wlrtl_1 a 11)
+function addVerticalSplitListeners() {
+  [...Array(11).keys()].forEach(c => {
+    document.querySelectorAll(`#wlrtl_${c + 1} > div`).forEach((el, i) => {
+      const num = `${(3 + 3 * c) - i}, ${(6 + 3 * c) - i}`;
+      el.onclick = () => setBet(el, num, 'split', 17);
+      el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, num, 'split', 17); };
+    });
+  });
+}
+
+// Listeners para corners (wlcb_1 y 2)
+function addCornerListeners() {
+  [1, 2].forEach(c => {
+    document.querySelectorAll(`#wlcb_${c} .cbbb`).forEach((el, i) => {
+      const count = (c === 1) ? i + 1 : i + 12;
+      let baseNums = [2, 3, 5, 6];
+      let offset = (count < 12) ? (count - 1) * 3 : (count - 12) * 3;
+      let adjust = (count < 12) ? 0 : -1;
+      const num = baseNums.map(n => n + adjust + offset).join(', ');
+      el.onclick = () => setBet(el, num, 'corner_bet', 8);
+      el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, num, 'corner_bet', 8); };
+    });
+  });
 }
 
 // Listeners para 1-18 y 19-36 (bbtop)
@@ -38,6 +99,35 @@ function addBbtopListeners() {
     const type = i === 0 ? 'outside_low' : 'outside_high';
     el.onclick = () => setBet(el, num, type, 1);
     el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, num, type, 1); };
+  });
+}
+
+// Listeners para números, cero y columnas (number_board)
+function addNumberBoardListeners() {
+  const zero = document.querySelector('.number_0');
+  zero.onclick = () => setBet(zero, '0', 'zero', 35);
+  zero.oncontextmenu = (e) => { e.preventDefault(); removeBet(zero, '0', 'zero', 35); };
+
+  const numberBlocks = [3,6,9,12,15,18,21,24,27,30,33,36,'2 to 1',2,5,8,11,14,17,20,23,26,29,32,35,'2 to 1',1,4,7,10,13,16,19,22,25,28,31,34,'2 to 1'];
+  document.querySelectorAll('.number_board > div:not(.number_0)').forEach((el, i) => {
+    const value = numberBlocks[i];
+    if (value !== '2 to 1') {
+      el.onclick = () => setBet(el, `${value}`, 'inside_whole', 35);
+      el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, `${value}`, 'inside_whole', 35); };
+    } else {
+      const num = (i === 12) ? '3,6,9,12,15,18,21,24,27,30,33,36' : ((i === 25) ? '2,5,8,11,14,17,20,23,26,29,32,35' : '1,4,7,10,13,16,19,22,25,28,31,34');
+      el.onclick = () => setBet(el, num, 'outside_column', 2);
+      el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, num, 'outside_column', 2); };
+    }
+  });
+}
+
+// Listeners para docenas (bo3_board)
+function addBo3Listeners() {
+  document.querySelectorAll('.bo3_block').forEach((el, i) => {
+    const num = (i === 0) ? '1,2,3,4,5,6,7,8,9,10,11,12' : ((i === 1) ? '13,14,15,16,17,18,19,20,21,22,23,24' : '25,26,27,28,29,30,31,32,33,34,35,36');
+    el.onclick = () => setBet(el, num, 'outside_dozen', 2);
+    el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, num, 'outside_dozen', 2); };
   });
 }
 
