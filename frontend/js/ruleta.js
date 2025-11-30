@@ -1,4 +1,4 @@
-let bankValue = JSON.parse(localStorage.getItem('cuentas'))[localStorage.getItem('usuarioActual')].saldo;;
+let bankValue = 0;
 let currentBet = 0;
 let wager = 5;
 let lastWager = 0;
@@ -6,6 +6,7 @@ let bet = [];
 let numbersBet = [];
 let previousNumbers = [];
 let girar = true;
+let serverResult = null;
 
 let numRed = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
 let wheelnumbersAC = [0, 26, 3, 35, 12, 28, 7, 29, 18, 22, 9, 31, 14, 20, 1, 33, 16, 24, 5, 10, 23, 8, 30, 11, 36, 13, 27, 6, 34, 17, 25, 2, 21, 4, 19, 15, 32];
@@ -40,7 +41,7 @@ function addEventListeners() {
 // Listeners para double streets (wlttb_top)
 function addDoubleStreetListeners() {
   document.querySelectorAll('#wlttb_top .ttbbetblock').forEach((el, i) => {
-    const num = `${1 + 3*i}, ${2 + 3*i}, ${3 + 3*i}, ${4 + 3*i}, ${5 + 3*i}, ${6 + 3*i}`;
+    const num = `${1 + 3 * i}, ${2 + 3 * i}, ${3 + 3 * i}, ${4 + 3 * i}, ${5 + 3 * i}, ${6 + 3 * i}`;
     el.onclick = () => setBet(el, num, 'double_street', 5);
     el.oncontextmenu = (e) => { e.preventDefault(); removeBet(el, num, 'double_street', 5); };
   });
@@ -108,7 +109,7 @@ function addNumberBoardListeners() {
   zero.onclick = () => setBet(zero, '0', 'zero', 35);
   zero.oncontextmenu = (e) => { e.preventDefault(); removeBet(zero, '0', 'zero', 35); };
 
-  const numberBlocks = [3,6,9,12,15,18,21,24,27,30,33,36,'2 to 1',2,5,8,11,14,17,20,23,26,29,32,35,'2 to 1',1,4,7,10,13,16,19,22,25,28,31,34,'2 to 1'];
+  const numberBlocks = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, '2 to 1', 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, '2 to 1', 1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, '2 to 1'];
   document.querySelectorAll('.number_board > div:not(.number_0)').forEach((el, i) => {
     const value = numberBlocks[i];
     if (value !== '2 to 1') {
@@ -192,6 +193,11 @@ function addModalListeners() {
 function updateBankAndBet() {
   document.getElementById('bankSpan').innerText = bankValue.toLocaleString();
   document.getElementById('betSpan').innerText = currentBet.toLocaleString();
+
+  const saldoGrande = document.getElementById('saldo-ruleta');
+  if (saldoGrande) {
+      saldoGrande.innerText = `$${bankValue.toLocaleString()}`;
+  }
 }
 
 // Función para limpiar apuestas
@@ -286,65 +292,79 @@ function removeBet(element, numbers, type, odds) {
 }
 
 // Función para girar la ruleta
-function spin() {
-  const winningSpin = Math.floor(Math.random() * 37);
-  girar = false;
-  spinWheel(winningSpin);
-  setTimeout(() => calculateWin(winningSpin), 10000);
+async function spin() {
+  if (bet.length === 0) return;
+
+  girar = false; // Bloquear botón
+
+  try {
+    // Enviar apuestas al servidor
+    const response = await fetch('/api/game/spin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ bets: bet })
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      alert(data.message || 'Error al girar');
+      girar = true;
+      return;
+    }
+
+    // Guardamos el resultado pero NO lo mostramos todavía
+    serverResult = await response.json();
+
+    // Iniciamos la animación visual con el número que decidió el servidor
+    spinWheel(serverResult.winningNumber);
+
+    // Esperamos 10 segundos (lo que dura tu animación) para mostrar el resultado final
+    setTimeout(() => finalizarJugada(), 10000);
+
+  } catch (error) {
+    console.error('Error:', error);
+    girar = true;
+  }
 }
 
 // Función separada para calcular ganancias después del spin
-function calculateWin(winningSpin) {
-  let winValue = 0;
-  let betTotal = 0;
-  const usuario = localStorage.getItem('usuarioActual');
-  const cuentas = JSON.parse(localStorage.getItem('cuentas'));
-  let estadoCuenta = cuentas[usuario].saldo;
+function finalizarJugada() {
+  if (!serverResult) return;
 
-  // Calcular ganancias
-  if (numbersBet.includes(winningSpin)) {
-    bet.forEach(b => {
-      if (b.numbers.split(',').map(Number).includes(winningSpin)) {
-        const payout = b.odds * b.amt + b.amt;
-        bankValue += payout;
-        winValue += b.odds * b.amt;
-        betTotal += b.amt;
-      }
-    });
-    win(winningSpin, winValue, betTotal);
+  const { winningNumber, totalWon, newBalance } = serverResult;
+
+  // 1. Actualizar Saldo Real
+  bankValue = newBalance;
+  updateBankAndBet();
+
+  // 2. Mostrar Notificación de Victoria
+  if (totalWon > 0) {
+    let betTotal = 0;
+    bet.forEach(b => betTotal += b.amt);
+    let winValue = totalWon - betTotal; // Ganancia neta para mostrar
+
+    win(winningNumber, winValue, betTotal);
   }
 
-  currentBet = 0;
-  estadoCuenta = bankValue;
-  cuentas[usuario].saldo = bankValue;
-
-  if (!cuentas[usuario].apuestas) cuentas[usuario].apuestas = [];
-
-  // Guardar apuestas en historial
-  bet.forEach(b => {
-    const gano = b.numbers.split(',').map(Number).includes(winningSpin);
-    cuentas[usuario].apuestas.push({
-      tipo: b.type,
-      monto: b.amt,
-      resultado: gano ? 'Victoria' : 'Derrota',
-      variacion: gano ? b.amt * b.odds : -b.amt
-    });
-  });
-
-  localStorage.setItem('cuentas', JSON.stringify(cuentas));
+  // 3. Actualizar Tabla de Historial
   actualizarTablaApuestas();
-  updateBankAndBet();
-  const pnClass = numRed.includes(winningSpin) ? 'pnRed' : (winningSpin === 0 ? 'pnGreen' : 'pnBlack');
+
+  // 4. Lógica Visual de la Bola (Tu código original de UI)
+  const pnClass = numRed.includes(winningNumber) ? 'pnRed' : (winningNumber === 0 ? 'pnGreen' : 'pnBlack');
   const pnSpan = document.createElement('span');
   pnSpan.className = pnClass;
-  pnSpan.innerText = winningSpin;
+  pnSpan.innerText = winningNumber;
   const pnContent = document.getElementById('pnContent');
   pnContent.appendChild(pnSpan);
   pnContent.scrollLeft = pnContent.scrollWidth;
+
+  // 5. Limpieza y Reinicio
   bet = [];
   numbersBet = [];
+  currentBet = 0;
   removeChips();
   wager = lastWager;
+  girar = true;
 }
 
 // Función para mostrar notificación de ganancia
@@ -423,29 +443,43 @@ window.addEventListener('storage', (event) => {
   }
 });
 
-function actualizarTablaApuestas() {
-  const usuario = localStorage.getItem('usuarioActual');
-  if (!usuario) return;
+async function actualizarTablaApuestas() {
+  try {
+    const response = await fetch('/api/game/history');
+    if (!response.ok) return;
 
-  const cuentas = JSON.parse(localStorage.getItem('cuentas')) || {};
-  const cuenta = cuentas[usuario];
-  if (!cuenta || !cuenta.apuestas) return;
+    const historial = await response.json();
+    const cuerpoTabla = document.getElementById('tabla-ultimas-apuestas');
 
-  const cuerpoTabla = document.getElementById('tabla-ultimas-apuestas');
-  if (!cuerpoTabla) return;
-
-  cuerpoTabla.innerHTML = '';
-
-  cuenta.apuestas.slice(-5).forEach(apuesta => {
-    const fila = document.createElement('tr');
-    fila.innerHTML = `
-      <td>${apuesta.numero ?? '-'}</td>
-      <td>$${apuesta.monto?.toLocaleString() ?? 0}</td>
-      <td>${apuesta.resultado ?? 'Pendiente'}</td>
-      <td>${apuesta.variacion >= 0 ? '+' : '-'}$${Math.abs(apuesta.variacion).toLocaleString()}</td>
-    `;
-    cuerpoTabla.appendChild(fila);
-  });
+    if (cuerpoTabla) {
+      cuerpoTabla.innerHTML = '';
+      // Mostrar los últimos 5
+      historial.slice(0, 5).forEach(apuesta => {
+        const fila = document.createElement('tr');
+        const signo = apuesta.variacion >= 0 ? '+' : '';
+        fila.innerHTML = `
+                    <td>${apuesta.tipo}</td>
+                    <td>$${apuesta.monto.toLocaleString()}</td>
+                    <td>${apuesta.resultado}</td>
+                    <td>${signo}$${apuesta.variacion.toLocaleString()}</td>
+                `;
+        cuerpoTabla.appendChild(fila);
+      });
+    }
+  } catch (e) { console.error(e); }
 }
 
-document.addEventListener('DOMContentLoaded', actualizarTablaApuestas);
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // Cargar saldo real al iniciar
+        const res = await fetch('/api/user/profile');
+        if (res.ok) {
+            const user = await res.json();
+            bankValue = user.saldo;
+            updateBankAndBet();
+            actualizarTablaApuestas();
+        } else {
+            window.location.href = 'login.html';
+        }
+    } catch (e) { console.error(e); }
+});

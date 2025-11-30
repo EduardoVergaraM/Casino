@@ -13,6 +13,13 @@ const userSchema = new mongoose.Schema({
         valor: String,  
         fecha: String,   
         hora: String
+    }],
+    apuestas: [{
+        tipo: String, 
+        monto: Number,
+        resultado: String, 
+        variacion: Number, 
+        fecha: { type: Date, default: Date.now }
     }]
 });
 

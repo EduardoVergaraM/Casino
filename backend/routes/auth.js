@@ -19,6 +19,22 @@ router.post('/register' , async(req, res) =>{
             return res.status(400).json({message: 'Usuario o email ya existentes'});
         }
 
+                // --- INICIO VALIDACIÓN EDAD ---
+        const nacimiento = new Date(fechaNacimiento);
+        const hoy = new Date();
+        
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const mes = hoy.getMonth() - nacimiento.getMonth();
+        
+        // Ajuste si aún no cumple años en el mes/día actual
+        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+            edad--;
+        }
+
+        if (edad < 18) {
+            return res.status(400).json({ message: 'Debes ser mayor de 18 años para registrarte.' });
+        }
+
         //hashear contraseña
         const salt = await bcrypt.genSalt(10);
         const hashedPassword =  await bcrypt.hash(password, salt);
