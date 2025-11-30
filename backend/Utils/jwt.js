@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const SECRET_KEY= 'contraseña_secreta_1234';
+const SECRET_KEY= process.env.JWT_SECRET;
 
 // comando para usar en terminal mas tarde
 //npm install cookie-parser 
