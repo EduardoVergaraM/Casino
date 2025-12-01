@@ -26,7 +26,6 @@ router.get('/profile', verifyToken, async (req, res) => {
 // == Depositos ========================
 router.post('/deposit', verifyToken, async (req, res) => {
     try {
-        //revisar si se llama saldo en bd
         const { amount } = req.body;
         const monto = parseInt(amount);
 

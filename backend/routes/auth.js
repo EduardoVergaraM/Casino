@@ -19,14 +19,12 @@ router.post('/register' , async(req, res) =>{
             return res.status(400).json({message: 'Usuario o email ya existentes'});
         }
 
-                // --- INICIO VALIDACIÓN EDAD ---
         const nacimiento = new Date(fechaNacimiento);
         const hoy = new Date();
         
         let edad = hoy.getFullYear() - nacimiento.getFullYear();
         const mes = hoy.getMonth() - nacimiento.getMonth();
         
-        // Ajuste si aún no cumple años en el mes/día actual
         if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
             edad--;
         }
@@ -80,7 +78,6 @@ router.post('/login', async(req,res)=> {
         }
 
         generateToken(res, user._id, user.username);
-        //revisar si es que hay id del usuario
 
         res.json({
             message: 'Login exitoso',
