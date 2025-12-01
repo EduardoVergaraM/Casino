@@ -1,9 +1,8 @@
-// Función para verificar si el usuario está autenticado (intenta fetch profile)
 async function isAuthenticated() {
     try {
         const response = await fetch('/api/user/profile', {
-            //method:'GET', REVISAR SI AGREGAR ESTO
-            credentials: 'include'  // Enviar cookie JWT
+            method:'GET',
+            credentials: 'include'
         });
         return response.ok;
     } catch (error) {
@@ -16,7 +15,7 @@ async function isAuthenticated() {
 async function getUserProfile() {
     try {
         const response = await fetch('/api/user/profile', {
-            //method:'GET', REVISAR SI AGREGAR ESTO
+            method:'GET',
             credentials: 'include'
         });
         if (!response.ok) {
@@ -29,12 +28,12 @@ async function getUserProfile() {
     }
 }
 
-// Función para actualizar el menú de navegación basado en estado de auth
+// Función para actualizar el menú de navegación
 async function updateMenu() {
-    const authLinks = document.querySelectorAll('.auth-link');  // Enlaces protegidos: perfil, transacciones, ruleta
-    const guestLinks = document.querySelectorAll('.guest-link');  // Enlaces login/registro
-    const userNameElem = document.querySelector('.user-name');  // Elemento para mostrar nombre usuario
-    const logoutBtn = document.querySelector('.logout-btn');  // Botón de logout si existe
+    const authLinks = document.querySelectorAll('.auth-link');
+    const guestLinks = document.querySelectorAll('.guest-link'); 
+    const userNameElem = document.querySelector('.user-name'); 
+    const logoutBtn = document.querySelector('.logout-btn');
 
     const isAuth = await isAuthenticated();
 
@@ -45,7 +44,6 @@ async function updateMenu() {
             authLinks.forEach(link => link.style.display = 'block');
             guestLinks.forEach(link => link.style.display = 'none');
         }
-        // Agregar listener a logout si existe
         if (logoutBtn) {
             logoutBtn.addEventListener('click', handleLogout);
         }
@@ -57,27 +55,27 @@ async function updateMenu() {
 }
 
 // Función para manejar logout
-// async function handleLogout() {
-//     try {
-//         const response = await fetch('/api/auth/logout', {
-//             method: 'POST',
-//             credentials: 'include'
-//         });
+async function handleLogout() {
+    try {
+        const response = await fetch('/api/auth/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
 
-//         if (response.ok) {
-//             window.location.href = './index.html';  // Redirigir a home
-//         } else {
-//             alert('Error al cerrar sesión');
-//         }
-//     } catch (error) {
-//         console.error('Error en logout:', error);
-//         alert('Error en el servidor');
-//     }
-// }
+        if (response.ok) {
+            window.location.href = './index.html';  // Redirigir a home
+        } else {
+            alert('Error al cerrar sesión');
+        }
+    } catch (error) {
+        console.error('Error en logout:', error);
+        alert('Error en el servidor');
+    }
+}
 
-// Protección de rutas: redirigir si no auth en páginas protegidas
+// Protección de rutas
 async function protectRoute() {
-    const protectedPages = ['perfil.html', 'transacciones.html', 'ruleta.html'];  // Agrega más si necesario
+    const protectedPages = ['perfil.html', 'transacciones.html', 'ruleta.html'];
     const currentPage = window.location.pathname.split('/').pop();
 
     if (protectedPages.includes(currentPage)) {
@@ -88,10 +86,9 @@ async function protectRoute() {
     }
 }
 
-// Inicialización al cargar página
 document.addEventListener('DOMContentLoaded', async () => {
-    await protectRoute();  // Proteger rutas
-    await updateMenu();  // Actualizar menú basado en auth
-    await actualizarPerfil();  // Actualizar datos si aplica
+    await protectRoute(); 
+    await updateMenu(); 
+    await actualizarPerfil();  
 
 });
