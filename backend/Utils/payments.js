@@ -9,12 +9,10 @@ const betOdds = {
     'inside_whole': 35,    // 35:1 (número individual)
     'outside_column': 2,   // 2:1 (columnas)
     'outside_dozen': 2,    // 2:1 (docenas)
-    // Agregamos los tipos específicos por si acaso
     'outside_even': 1,
     'outside_odd': 1,
     'outside_red': 1,
     'outside_black': 1,
-    // ¡IMPORTANTE! Este es el que usa tu frontend para Rojo/Negro/Par/Impar
     'outside_oerb': 1      
 };
 
@@ -27,7 +25,6 @@ function calculatePayout(bets, winningNumber) {
         const odds = betOdds[bet.type] || 0;
         totalBet += bet.amt;
 
-        // Manejo robusto de los números (si viene string o array)
         let betNumbers = [];
         if (typeof bet.numbers === 'string') {
             betNumbers = bet.numbers.split(',').map(n => parseInt(n.trim()));
@@ -41,39 +38,34 @@ function calculatePayout(bets, winningNumber) {
         const gano = betNumbers.includes(winningNumber);
 
         if (gano) {
-            // Ganancia Pura = Monto * Odds
             const profit = bet.amt * odds;
-            // Retorno Total = Ganancia Pura + Lo que apostó (Devolución)
             const payout = profit + bet.amt;
-            
+
             totalPayout += payout;
 
             historialApuestas.push({
                 tipo: bet.type,
                 monto: bet.amt,
                 resultado: 'Victoria',
-                variacion: profit // Guardamos cuánto ganó limpio
+                variacion: profit
             });
         } else {
             historialApuestas.push({
                 tipo: bet.type,
                 monto: bet.amt,
                 resultado: 'Derrota',
-                variacion: -bet.amt // Perdió lo apostado
+                variacion: -bet.amt
             });
         }
     });
 
-    // netChange: Cuánto cambia el saldo final.
-    // Si apostó 10 y ganó (retorno 20), netChange es +10.
-    // Si apostó 10 y perdió (retorno 0), netChange es -10.
     const netChange = totalPayout - totalBet;
 
     return {
-        totalPayout,       // Total ganado (bruto)
-        totalBet,          // Total apostado
-        netChange,         // Variación real del saldo
-        historialApuestas  // Array listo para guardar en MongoDB
+        totalPayout,
+        totalBet,
+        netChange,
+        historialApuestas
     };
 }
 

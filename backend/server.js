@@ -9,19 +9,19 @@ const {connectDB} = require('/Utils/db.js')
 const app = express();
 app.use(express.json());
 
-// == Cookies ===========================
+// Cookies
 app.use(cookieParser());
 
-// == Base de datos =====================
+// Base de datos
 connectDB();
 
-// == API ===============================
+// API
 app.use('/api', apiRoutes);
 
-// == Archivos ==========================
+// Archivos
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// == Fallback ==========================
+// Fallback
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
@@ -30,7 +30,7 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Route not found' });
 });
 
-// == Servidor ==========================
+// Servidor
 app.listen(3042, () => {
     console.log(`Servidor Express escuchando en puerto 3042`);
     console.log(`Dominio configurado: ${config.DOMAIN}`);

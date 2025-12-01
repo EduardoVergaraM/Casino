@@ -1,12 +1,7 @@
 const jwt = require('jsonwebtoken');
 const SECRET_KEY= process.env.JWT_SECRET;
 
-// comando para usar en terminal mas tarde
-//npm install cookie-parser 
-
-
 //generacion del token 
-
 const generateToken = (res,userId, username) =>{
 
     const token = jwt.sign(
@@ -24,7 +19,6 @@ const generateToken = (res,userId, username) =>{
 };
 
 //Middleware
-
 const verifyToken = (req, res, next) =>{
     const token = req.cookies.jwt;
 
